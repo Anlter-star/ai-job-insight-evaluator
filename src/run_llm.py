@@ -32,11 +32,35 @@ def _write_json(path: Path, data: dict[str, Any]) -> None:
         file.write("\n")
 
 
+def _load_resumable_predictions(
+    path: Path, method_name: str, valid_job_ids: set[str]
+) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    predictions: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        if not raw_line.strip():
+            continue
+        item = json.loads(raw_line)
+        job_id = item.get("job_id")
+        if (
+            item.get("method") != method_name
+            or job_id not in valid_job_ids
+            or job_id in seen
+        ):
+            continue
+        predictions.append(item)
+        seen.add(job_id)
+    return predictions
+
+
 def run(
     dataset_path: Path,
     results_dir: Path,
     limit: int | None = None,
     output_prefix: str = "llm",
+    restart: bool = False,
 ) -> dict[str, Any]:
     records = load_jsonl(dataset_path)
     if limit is not None:
@@ -45,11 +69,25 @@ def run(
         records = records[:limit]
 
     extractor = OpenAICompatibleExtractor(LLMConfig.from_env())
-    predictions: list[dict[str, Any]] = []
     results_dir.mkdir(parents=True, exist_ok=True)
     prediction_path = results_dir / f"{output_prefix}_predictions.jsonl"
+    predictions = (
+        []
+        if restart
+        else _load_resumable_predictions(
+            prediction_path,
+            extractor.method_name,
+            {record["job_id"] for record in records},
+        )
+    )
+    completed_ids = {item["job_id"] for item in predictions}
+    if predictions:
+        print(f"Resuming with {len(predictions)} completed record(s).")
 
     for index, record in enumerate(records, start=1):
+        if record["job_id"] in completed_ids:
+            print(f"[{index}/{len(records)}] Skipping completed {record['job_id']}")
+            continue
         print(f"[{index}/{len(records)}] Extracting {record['job_id']} ...")
         predictions.append(
             {
@@ -79,10 +117,19 @@ def main() -> None:
     parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS_DIR)
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--output-prefix", default="llm")
+    parser.add_argument(
+        "--restart", action="store_true", help="Ignore a partial output and call every record again"
+    )
     args = parser.parse_args()
 
     try:
-        metrics = run(args.dataset, args.results_dir, args.limit, args.output_prefix)
+        metrics = run(
+            args.dataset,
+            args.results_dir,
+            args.limit,
+            args.output_prefix,
+            args.restart,
+        )
     except (LLMConfigurationError, LLMResponseError) as exc:
         parser.exit(1, f"Error: {exc}\n")
     print(f"Records: {metrics['dataset_size']}")

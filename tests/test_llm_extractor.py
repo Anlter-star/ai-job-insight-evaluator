@@ -74,6 +74,18 @@ class LLMExtractorTests(unittest.TestCase):
         sent = json.loads(request.data.decode("utf-8"))
         self.assertEqual(sent["response_format"], {"type": "json_object"})
         self.assertEqual(sent["model"], "test-model")
+        self.assertNotIn("thinking", sent)
+
+    @patch("src.llm_extractor.urlopen")
+    def test_disables_thinking_for_deepseek(self, mocked_urlopen) -> None:
+        mocked_urlopen.return_value = _FakeResponse(
+            {"choices": [{"message": {"content": json.dumps(VALID_PREDICTION, ensure_ascii=False)}}]}
+        )
+        config = LLMConfig("test-key", "https://api.deepseek.com", "deepseek-flash", max_retries=0)
+        OpenAICompatibleExtractor(config).extract(load_jsonl()[0])
+        request = mocked_urlopen.call_args.args[0]
+        sent = json.loads(request.data.decode("utf-8"))
+        self.assertEqual(sent["thinking"], {"type": "disabled"})
 
     @patch("src.llm_extractor.time.sleep")
     @patch("src.llm_extractor.urlopen")

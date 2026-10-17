@@ -8,6 +8,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -164,6 +165,12 @@ class OpenAICompatibleExtractor:
             "response_format": {"type": "json_object"},
             "stream": False,
         }
+        # DeepSeek currently enables thinking by default. For short structured
+        # extraction it can consume the output budget before producing content,
+        # so use its documented non-thinking mode. Other providers never see
+        # this provider-specific parameter.
+        if urlparse(self.config.base_url).hostname == "api.deepseek.com":
+            payload["thinking"] = {"type": "disabled"}
         last_error: LLMResponseError | None = None
         for attempt in range(self.config.max_retries + 1):
             response = self._post(payload)
