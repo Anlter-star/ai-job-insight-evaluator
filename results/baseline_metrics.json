@@ -1,0 +1,273 @@
+{
+  "method": "keyword_rules_v1",
+  "dataset": "data\\annotated\\gold_dataset.jsonl",
+  "dataset_size": 9,
+  "scalar_metrics": {
+    "job_category": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "employment_type": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "location": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "education_min": {
+      "correct": 6,
+      "total": 9,
+      "accuracy": 0.6667
+    },
+    "student_status": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "graduation_year": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "work_days_per_week": {
+      "correct": 3,
+      "total": 9,
+      "accuracy": 0.3333
+    },
+    "internship_months": {
+      "correct": 3,
+      "total": 9,
+      "accuracy": 0.3333
+    }
+  },
+  "scalar_macro_accuracy": 0.7917,
+  "list_metrics": {
+    "required_hard_skills": {
+      "true_positive": 19,
+      "false_positive": 1,
+      "false_negative": 18,
+      "precision": 0.95,
+      "recall": 0.5135,
+      "f1": 0.6667
+    },
+    "required_tools": {
+      "true_positive": 7,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "preferred_hard_skills": {
+      "true_positive": 9,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.9,
+      "recall": 1.0,
+      "f1": 0.9474
+    },
+    "preferred_experience": {
+      "true_positive": 26,
+      "false_positive": 0,
+      "false_negative": 1,
+      "precision": 1.0,
+      "recall": 0.963,
+      "f1": 0.9811
+    }
+  },
+  "list_micro": {
+    "true_positive": 61,
+    "false_positive": 2,
+    "false_negative": 19,
+    "precision": 0.9683,
+    "recall": 0.7625,
+    "f1": 0.8531
+  },
+  "hallucination_rate": 0.0317,
+  "job_errors": [
+    {
+      "job_id": "PM_001",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 6,
+          "prediction": null
+        }
+      },
+      "list_errors": {}
+    },
+    {
+      "job_id": "LLMEVAL_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解策略产品或评测工程师工作流"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "DA_002",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": 3
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {}
+    },
+    {
+      "job_id": "PM_002",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 10,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [],
+          "extra": [
+            "SQL"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "PM_003",
+      "scalar_errors": {
+        "education_min": {
+          "gold": "硕士",
+          "prediction": null
+        },
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 5,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "功能设计",
+            "多任务管理",
+            "客户沟通与协调",
+            "市场定位",
+            "独立决策与问题解决",
+            "用户体验优化",
+            "需求分析"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "互联网行业经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "LLMEVAL_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解视频生成工具",
+            "影视创作要素知识"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "LLMEVAL_003",
+      "scalar_errors": {
+        "education_min": {
+          "gold": "本科",
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解云计算、GPU资源或MaaS平台",
+            "了解大模型训练与推理平台",
+            "产品或运营思维",
+            "将技术认知转化为用户需求和产品方案"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "DA_001",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "互联网电商行业知识",
+            "商品模型、搜索优化和品类规划知识",
+            "持续规划与体系化优化",
+            "数据敏感度"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "DA_003",
+      "scalar_errors": {
+        "education_min": {
+          "gold": "硕士",
+          "prediction": null
+        },
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "数据分析能力"
+          ]
+        }
+      }
+    }
+  ]
+}
