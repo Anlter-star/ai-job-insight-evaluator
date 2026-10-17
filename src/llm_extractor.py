@@ -153,7 +153,7 @@ class OpenAICompatibleExtractor:
         self.method_name = f"llm:{config.model}:{self.prompt_version}"
 
     def extract(self, record: dict[str, Any]) -> dict[str, Any]:
-        payload = {
+        payload: dict[str, Any] = {
             "model": self.config.model,
             "messages": [
                 {"role": "system", "content": self.system_prompt},
@@ -164,7 +164,25 @@ class OpenAICompatibleExtractor:
             "response_format": {"type": "json_object"},
             "stream": False,
         }
-        response = self._post(payload)
+        last_error: LLMResponseError | None = None
+        for attempt in range(self.config.max_retries + 1):
+            response = self._post(payload)
+            try:
+                return self._parse_response(response)
+            except LLMResponseError as exc:
+                last_error = exc
+                if attempt < self.config.max_retries:
+                    payload["messages"][-1]["content"] = (
+                        compose_source_text(record)
+                        + "\n\n重要：请立即返回一个非空的合法 JSON 对象。"
+                    )
+                    time.sleep(2**attempt)
+        raise LLMResponseError(
+            f"Model output remained unusable after retries: {last_error}"
+        ) from last_error
+
+    @staticmethod
+    def _parse_response(response: dict[str, Any]) -> dict[str, Any]:
         try:
             content = response["choices"][0]["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:

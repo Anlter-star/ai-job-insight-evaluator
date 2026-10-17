@@ -75,6 +75,21 @@ class LLMExtractorTests(unittest.TestCase):
         self.assertEqual(sent["response_format"], {"type": "json_object"})
         self.assertEqual(sent["model"], "test-model")
 
+    @patch("src.llm_extractor.time.sleep")
+    @patch("src.llm_extractor.urlopen")
+    def test_retries_an_empty_model_response(self, mocked_urlopen, _mocked_sleep) -> None:
+        mocked_urlopen.side_effect = [
+            _FakeResponse({"choices": [{"message": {"content": ""}}]}),
+            _FakeResponse(
+                {"choices": [{"message": {"content": json.dumps(VALID_PREDICTION, ensure_ascii=False)}}]}
+            ),
+        ]
+        config = LLMConfig("test-key", "https://example.com/v1", "test-model", max_retries=1)
+        extractor = OpenAICompatibleExtractor(config)
+        prediction = extractor.extract(load_jsonl()[0])
+        self.assertEqual(prediction["job_category"], "产品经理")
+        self.assertEqual(mocked_urlopen.call_count, 2)
+
 
 if __name__ == "__main__":
     unittest.main()
