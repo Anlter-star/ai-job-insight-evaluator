@@ -18,6 +18,8 @@ Thumbs.db
 
 # Generated outputs
 results/*.csv
+results/llm_*.json
+results/llm_*.jsonl
 results/figures/*
 !results/.gitkeep
 !results/figures/.gitkeep

@@ -32,7 +32,8 @@
 - [x] 完成首批 9 条岗位数据与人工标准答案
 - [x] 编写标注规范
 - [x] 实现规则基线
-- [ ] 接入大模型并运行评测
+- [x] 完成兼容多种模型的大模型提取器
+- [ ] 填写 API 配置并运行大模型评测
 - [ ] 开发可视化页面
 
 ## 运行规则基线
@@ -53,6 +54,33 @@ python -m unittest discover -s tests -v
 
 - `results/baseline_predictions.jsonl`：每个岗位的规则提取结果。
 - `results/baseline_metrics.json`：准确率、Precision、Recall、F1、幻觉率和逐岗位错误。
+
+## 运行大模型提取器
+
+提取器使用 OpenAI 兼容的 `/chat/completions` 协议，默认示例配置为 DeepSeek，也可以通过修改三项配置切换到其他兼容服务。程序只使用 Python 标准库，不需要安装 SDK。
+
+首先复制 `.env.example` 为 `.env`，填写：
+
+```text
+LLM_API_KEY=你的密钥
+LLM_BASE_URL=https://api.deepseek.com
+LLM_MODEL=deepseek-flash
+```
+
+`.env` 已被 Git 忽略，严禁把真实密钥提交到仓库。建议先调用一条数据检查配置和余额：
+
+```bash
+python -m src.run_llm --limit 1 --output-prefix llm_smoke
+```
+
+测试成功后运行全部 9 条：
+
+```bash
+python -m src.run_llm
+python -m src.compare_models
+```
+
+完整运行会在本地生成 `results/llm_predictions.jsonl` 和 `results/llm_metrics.json`。这两个文件默认不提交，以免不同模型或重复实验的输出互相覆盖；正式实验结果确认后可另行选择性纳入版本管理。
 
 ## 首轮基线结果
 
