@@ -153,6 +153,18 @@ python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jso
 
 DeepSeek + Prompt v2已完成：共同8个单值字段准确率从65.28%提升至93.06%，全部9个单值字段为93.83%；用工类型、学历、毕业年份、到岗天数、实习期限和新增日薪字段均达到100%，技能F1由19.00%小幅提升至20.56%。标注审计和详细结果见 `docs/metadata_input_v2_report.md`。
 
+### 数据集上下文与 Prompt v3
+
+首轮盲测已结束，原验证集现在作为9条调优数据使用。每条记录新增模型可见的 `input.dataset_context.employment_type`；它来自已确认的采集范围，不从 `gold` 动态读取。Prompt v3 同时收紧 `student_status`、岗位分类、必需/加分字段边界和技能粒度规则。为保留历史结果，v3输出写入独立目录：
+
+```bash
+python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3
+python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3 --restart
+python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3
+```
+
+规则v3单值字段宏平均准确率为95.06%。DeepSeek + Prompt v3已在9条调优数据上完成：9个单值字段全部达到100%，技能微平均F1从v2的20.56%提升到24.75%。潜在无原文支持项率从13.48%升到19.38%，仍需在新的冻结测试集上检验泛化并继续控制技能输出粒度。详细结果见 `docs/tuning_v3_report.md`。
+
 ## 仓库结构
 
 ```text

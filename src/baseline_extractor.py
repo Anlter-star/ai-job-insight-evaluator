@@ -107,7 +107,7 @@ def _matches(text: str, pattern: str) -> bool:
 class RuleBasedExtractor:
     """Extract a small, auditable subset of the annotation schema."""
 
-    method_name = "keyword_rules_v2_metadata"
+    method_name = "keyword_rules_v3_context"
 
     def extract(self, record: dict[str, Any]) -> dict[str, Any]:
         input_data = record["input"]
@@ -116,6 +116,7 @@ class RuleBasedExtractor:
         requirements = input_data["requirements"]
         preferred = input_data["preferred_qualifications"]
         page_metadata = input_data.get("page_metadata", {})
+        dataset_context = input_data.get("dataset_context", {})
         full_text = "\n".join([title, responsibilities, requirements, preferred])
 
         required_tools, preferred_tools = self._extract_tools(requirements, preferred)
@@ -126,7 +127,8 @@ class RuleBasedExtractor:
 
         return {
             "job_category": self._extract_category(title, full_text),
-            "employment_type": "实习" if "实习" in full_text else None,
+            "employment_type": dataset_context.get("employment_type")
+            or ("实习" if "实习" in full_text else None),
             "location": page_metadata.get("location", input_data["city"]) or None,
             "salary_yuan_per_day": page_metadata.get("salary_yuan_per_day"),
             "education_min": page_metadata.get("education")

@@ -27,6 +27,7 @@ REQUIRED_INPUT_FIELDS = {
     "requirements",
     "preferred_qualifications",
     "page_metadata",
+    "dataset_context",
 }
 
 REQUIRED_PAGE_METADATA_FIELDS = {
@@ -36,6 +37,8 @@ REQUIRED_PAGE_METADATA_FIELDS = {
     "work_days_per_week",
     "internship_months",
 }
+
+ALLOWED_EMPLOYMENT_TYPES = {"实习", "全职", "兼职", None}
 
 
 class DatasetValidationError(ValueError):
@@ -65,6 +68,18 @@ def _validate_record(record: dict[str, Any], line_number: int) -> None:
         raise DatasetValidationError(
             f"Line {line_number} is missing page metadata fields: "
             f"{sorted(missing_metadata)}"
+        )
+
+    dataset_context = record["input"]["dataset_context"]
+    if not isinstance(dataset_context, dict):
+        raise DatasetValidationError(
+            f"Line {line_number}: input.dataset_context must be an object"
+        )
+    employment_type = dataset_context.get("employment_type")
+    if employment_type not in ALLOWED_EMPLOYMENT_TYPES:
+        raise DatasetValidationError(
+            f"Line {line_number}: unsupported dataset-context employment type: "
+            f"{employment_type!r}"
         )
 
     if not isinstance(record["gold"], dict):
@@ -124,7 +139,13 @@ def compose_source_text(record: dict[str, Any]) -> str:
         f"每周到岗={metadata.get('work_days_per_week') if metadata.get('work_days_per_week') is not None else '未提供'}天；"
         f"实习期限={metadata.get('internship_months') if metadata.get('internship_months') is not None else '未提供'}个月"
     )
+    dataset_context = input_data.get("dataset_context", {})
+    dataset_context_text = (
+        "数据集上下文（由采集范围确认，可作为可靠输入）："
+        f"用工类型={dataset_context.get('employment_type') or '未提供'}"
+    )
     parts = [
+        dataset_context_text,
         page_metadata_text,
         f"职位名称：{input_data['job_title']}",
         f"公司：{input_data['company']}",

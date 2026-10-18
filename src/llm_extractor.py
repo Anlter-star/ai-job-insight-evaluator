@@ -15,7 +15,7 @@ from urllib.request import Request, urlopen
 from src.data_loader import PROJECT_ROOT, compose_source_text
 
 
-DEFAULT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "job_extraction_v2.txt"
+DEFAULT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "job_extraction_v3.txt"
 EXPECTED_FIELDS = {
     "job_category",
     "employment_type",
@@ -159,7 +159,7 @@ def validate_prediction(prediction: Any) -> dict[str, Any]:
 class OpenAICompatibleExtractor:
     """Call an OpenAI-compatible /chat/completions endpoint."""
 
-    prompt_version = "job_extraction_v2"
+    prompt_version = "job_extraction_v3"
 
     def __init__(self, config: LLMConfig, prompt_path: Path = DEFAULT_PROMPT_PATH):
         self.config = config

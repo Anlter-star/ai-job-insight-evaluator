@@ -82,6 +82,9 @@ class LLMExtractorTests(unittest.TestCase):
         sent = json.loads(request.data.decode("utf-8"))
         self.assertEqual(sent["response_format"], {"type": "json_object"})
         self.assertEqual(sent["model"], "test-model")
+        self.assertIn("用工类型=实习", sent["messages"][1]["content"])
+        self.assertEqual(extractor.prompt_version, "job_extraction_v3")
+        self.assertEqual(extractor.method_name, "llm:test-model:job_extraction_v3")
         self.assertNotIn("thinking", sent)
 
     @patch("src.llm_extractor.urlopen")

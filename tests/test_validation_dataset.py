@@ -35,6 +35,10 @@ class ValidationDatasetTests(unittest.TestCase):
         for record in self.validation_records:
             with self.subTest(job_id=record["job_id"]):
                 self.assertEqual(record["gold"]["employment_type"], "实习")
+                self.assertEqual(
+                    record["input"]["dataset_context"]["employment_type"],
+                    "实习",
+                )
                 self.assertIn("employment_type", record["evidence"])
 
     def test_split_marker_and_ids_are_unique(self) -> None:

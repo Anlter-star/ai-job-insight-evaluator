@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 
 from src.baseline_extractor import RuleBasedExtractor
-from src.data_loader import load_jsonl
+from src.data_loader import PROJECT_ROOT, compose_source_text, load_jsonl
 from src.evaluator import evaluate
 
 
@@ -41,6 +41,21 @@ class RuleBaselineTests(unittest.TestCase):
         self.assertEqual(
             prediction["salary_yuan_per_day"], {"min": 200, "max": 300}
         )
+
+    def test_dataset_context_is_model_visible(self) -> None:
+        source_text = compose_source_text(self.records[0])
+        self.assertIn("数据集上下文", source_text)
+        self.assertIn("用工类型=实习", source_text)
+
+    def test_dataset_context_sets_employment_type_for_generic_title(self) -> None:
+        validation_path = (
+            PROJECT_ROOT / "data" / "validation" / "validation_dataset.jsonl"
+        )
+        generic_product_job = {
+            record["job_id"]: record for record in load_jsonl(validation_path)
+        }["VAL_PM_002"]
+        prediction = self.extractor.extract(generic_product_job)
+        self.assertEqual(prediction["employment_type"], "实习")
 
     def test_data_job_extracts_sql_and_prefers_page_work_days(self) -> None:
         prediction = self.extractor.extract(self.by_id["DA_002"])

@@ -1,0 +1,437 @@
+{
+  "method": "llm:deepseek-flash:job_extraction_v3",
+  "model": "deepseek-flash",
+  "base_url": "https://api.deepseek.com",
+  "prompt_version": "job_extraction_v3",
+  "dataset": "data\\validation\\validation_dataset.jsonl",
+  "dataset_size": 9,
+  "scalar_metrics": {
+    "job_category": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "employment_type": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "location": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "salary_yuan_per_day": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "education_min": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "student_status": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "graduation_year": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "work_days_per_week": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "internship_months": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    }
+  },
+  "scalar_macro_accuracy": 1.0,
+  "list_metrics": {
+    "required_hard_skills": {
+      "true_positive": 12,
+      "false_positive": 59,
+      "false_negative": 26,
+      "precision": 0.169,
+      "recall": 0.3158,
+      "f1": 0.2202
+    },
+    "required_tools": {
+      "true_positive": 5,
+      "false_positive": 7,
+      "false_negative": 5,
+      "precision": 0.4167,
+      "recall": 0.5,
+      "f1": 0.4545
+    },
+    "preferred_hard_skills": {
+      "true_positive": 5,
+      "false_positive": 21,
+      "false_negative": 5,
+      "precision": 0.1923,
+      "recall": 0.5,
+      "f1": 0.2778
+    },
+    "preferred_experience": {
+      "true_positive": 3,
+      "false_positive": 17,
+      "false_negative": 12,
+      "precision": 0.15,
+      "recall": 0.2,
+      "f1": 0.1714
+    }
+  },
+  "list_micro": {
+    "true_positive": 25,
+    "false_positive": 104,
+    "false_negative": 48,
+    "precision": 0.1938,
+    "recall": 0.3425,
+    "f1": 0.2475
+  },
+  "hallucination_rate": 0.8062,
+  "job_errors": [
+    {
+      "job_id": "VAL_PM_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "AI及Agent产品分析",
+            "AI快速原型开发",
+            "Agent基本原理"
+          ],
+          "extra": [
+            "Benchmark设计",
+            "上下文基本原理",
+            "交互流程设计",
+            "产品方案设计",
+            "工具调用基本原理",
+            "模型基本原理",
+            "用户调研",
+            "竞品分析"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "AI行业前沿关注",
+            "Agent或AI工具迭代实践"
+          ],
+          "extra": [
+            "前后端开发经验",
+            "开源项目经验"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "前端开发经验",
+            "后端开发经验",
+            "开源项目经验"
+          ],
+          "extra": [
+            "关注AI行业前沿",
+            "战略思维",
+            "持续迭代Agent或AI工具提升项目效率"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_PM_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "产品设计工具",
+            "文档编写与汇报",
+            "需求挖掘与产品方案落地"
+          ],
+          "extra": [
+            "产品思维逻辑",
+            "产品策略制定",
+            "产品迭代优化",
+            "功能规划",
+            "原型设计",
+            "数据分析",
+            "文档编写",
+            "需求分析"
+          ]
+        },
+        "required_tools": {
+          "missing": [],
+          "extra": [
+            "产品设计工具"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_PM_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "PRD撰写",
+            "原型设计"
+          ],
+          "extra": [
+            "产品设计",
+            "产品需求文档（PRD）撰写",
+            "功能设计",
+            "原型绘制",
+            "需求调研"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "多模态大模型或Agent研究",
+            "实验研究与评估",
+            "工具调用与推理决策基本原理",
+            "强化学习基本原理",
+            "模型训练基本原理"
+          ],
+          "extra": [
+            "Python",
+            "实验开发",
+            "实验研究",
+            "工具调用",
+            "工程实践",
+            "强化学习",
+            "推理决策",
+            "模型训练",
+            "论文阅读"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Python"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "Agent模型训练、蒸馏或微调",
+            "多模态或Agentic RL研究",
+            "模型评测体系与数据迭代闭环"
+          ],
+          "extra": [
+            "Agentic RL",
+            "Agent模型训练",
+            "多模态",
+            "奖励设计",
+            "强化学习",
+            "微调",
+            "推理模型",
+            "数据迭代闭环",
+            "智能体行为分析",
+            "模型泛化",
+            "模型评测体系",
+            "蒸馏",
+            "训练稳定性"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "ACM、NOI、NOIP或代码竞赛获奖",
+            "CCF A会论文投稿经历",
+            "开源工作经历",
+            "科研项目经历"
+          ],
+          "extra": [
+            "ACM、NOI、NOIP或其他商业/代码竞赛奖项",
+            "参与CCF A会论文投稿、科研项目或开源工作",
+            "多模态、Agentic RL、强化学习或推理模型相关research经历",
+            "构建模型评测体系和数据迭代闭环的经验",
+            "独立开展Agent模型训练、蒸馏或微调实验的完整经历"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "AI自动标注与评分分析",
+            "Prompt设计",
+            "简单脚本与批量数据处理",
+            "视频内容质量评测",
+            "评测标准拆解",
+            "错误归纳与改进"
+          ],
+          "extra": [
+            "AI识别",
+            "Prompt编写",
+            "内容质量评测标准制定",
+            "剪辑节奏理解",
+            "自动标注",
+            "表演与视听表达理解",
+            "视频内容分析",
+            "质量评分",
+            "镜头语言理解"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "传媒",
+            "动画",
+            "影视"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "AI标注项目经验",
+            "Prompt设计或评测项目成果",
+            "内容分析经验",
+            "视频创作经验",
+            "质量评测经验"
+          ],
+          "extra": [
+            "AI标注项目",
+            "内容分析",
+            "视频创作",
+            "质量评测"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "参考代码编写调试",
+            "物理推导与数值计算",
+            "物理科学性复核"
+          ],
+          "extra": [
+            "数值计算",
+            "物理建模",
+            "物理推导"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "NumPy、SciPy或SymPy"
+          ],
+          "extra": [
+            "NumPy",
+            "SciPy",
+            "SymPy"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [],
+          "extra": [
+            "一线青年科研人员",
+            "博士后",
+            "在读硕博",
+            "第一/第二作者原创SCI期刊论文"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "数据可视化"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "Python编程",
+            "完整数据分析流程",
+            "数据建模与挖掘",
+            "至少两种算法原理"
+          ],
+          "extra": [
+            "Python",
+            "数据分析报告",
+            "数据可视化",
+            "数据建模",
+            "数据报表",
+            "数据抽取",
+            "数据探索",
+            "数据清洗",
+            "算法原理",
+            "编程能力"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Oracle或MySQL",
+            "Python"
+          ],
+          "extra": [
+            "MySQL",
+            "Oracle"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "数学",
+            "计算机"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [],
+          "extra": [
+            "建模挖掘经验（竞赛、课题项目等）"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [],
+          "extra": [
+            "业务数据分析",
+            "业务数据监控",
+            "基础分析",
+            "数据报表制作",
+            "数据报表维护",
+            "数据收集",
+            "数据整理"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Office"
+          ],
+          "extra": [
+            "常用办公软件"
+          ]
+        }
+      }
+    }
+  ]
+}

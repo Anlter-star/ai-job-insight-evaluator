@@ -21,9 +21,11 @@
 | `schema_version` | 字符串 | 当前为 `1.0`。 |
 | `job_id` | 字符串 | 与原始岗位表一致的唯一编号。 |
 | `source` | 对象 | 来源平台、URL 和采集日期。 |
-| `input` | 对象 | 原始职位名称、公司、城市、职责、要求、加分项和页面顶部结构化信息。 |
+| `input` | 对象 | 原始职位名称、公司、城市、职责、要求、加分项、页面顶部结构化信息和数据集上下文。 |
 
 `input.page_metadata` 保存页面顶部直接展示的 `location`、`salary_yuan_per_day`、`education`、`work_days_per_week` 和 `internship_months`。这些字段属于模型可见原始输入，不是从 `gold` 动态读取的答案；推理时必须与正文一起传入。
+
+`input.dataset_context` 保存采集阶段已经确认、且适用于该条记录的上下文。目前使用 `employment_type` 表示本批数据已确认的用工类型。它必须在采集或审计时静态写入记录，并作为模型可见输入传递；禁止在推理时从 `gold` 动态生成，以免答案泄漏。混合用工类型数据集应逐条填写，无法确认时使用 `null`。
 
 ### `gold` 标准答案字段
 
