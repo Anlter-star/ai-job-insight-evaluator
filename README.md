@@ -124,6 +124,18 @@ python -m src.run_evaluation_v2
 
 新增的9条岗位保存在 `data/validation/validation_dataset.jsonl`，不并入规则和提示词开发所用的 `gold_dataset.jsonl`。验证集覆盖产品经理、大模型评测和数据分析各3条，用于下一轮未见数据测试。首轮盲测完成前不得根据验证集修改规则、提示词或归一化别名；数据边界和冲突处理见 `docs/validation_dataset_notes.md`。
 
+冻结当前代码后，使用独立目录运行验证集，避免覆盖开发集结果：
+
+```bash
+python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
+python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation --rules-only
+python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
+python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
+python -m src.compare_models --results-dir results/validation
+```
+
+大模型提取支持断点续跑；若中途网络失败，重新执行同一条 `run_llm` 命令即可跳过已完成岗位。
+
 ## 仓库结构
 
 ```text

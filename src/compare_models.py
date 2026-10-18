@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Any
@@ -17,8 +18,12 @@ def _load(path: Path) -> dict[str, Any]:
 
 
 def main() -> None:
-    baseline = _load(RESULTS_DIR / "baseline_metrics.json")
-    llm = _load(RESULTS_DIR / "llm_metrics.json")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--results-dir", type=Path, default=RESULTS_DIR)
+    args = parser.parse_args()
+
+    baseline = _load(args.results_dir / "baseline_metrics.json")
+    llm = _load(args.results_dir / "llm_metrics.json")
     rows = [
         ("Scalar macro accuracy", baseline["scalar_macro_accuracy"], llm["scalar_macro_accuracy"]),
         ("List micro precision", baseline["list_micro"]["precision"], llm["list_micro"]["precision"]),
@@ -31,7 +36,7 @@ def main() -> None:
     for name, rule_value, llm_value in rows:
         print(f"{name:<28} {rule_value:>9.2%} {llm_value:>9.2%} {llm_value-rule_value:>+9.2%}")
 
-    v2_path = RESULTS_DIR / "evaluation_v2_metrics.json"
+    v2_path = args.results_dir / "evaluation_v2_metrics.json"
     if v2_path.exists():
         v2 = _load(v2_path)
         print("\nEvaluator v2")

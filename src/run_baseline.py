@@ -15,6 +15,14 @@ from src.evaluator import evaluate
 DEFAULT_RESULTS_DIR = PROJECT_ROOT / "results"
 
 
+def _dataset_label(dataset_path: Path) -> str:
+    resolved = dataset_path.resolve()
+    try:
+        return str(resolved.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(resolved)
+
+
 def _write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as file:
         for record in records:
@@ -40,7 +48,7 @@ def run(dataset_path: Path, results_dir: Path) -> dict[str, Any]:
     ]
     metrics = {
         "method": extractor.method_name,
-        "dataset": str(dataset_path.relative_to(PROJECT_ROOT)),
+        "dataset": _dataset_label(dataset_path),
         **evaluate(records, predictions),
     }
 

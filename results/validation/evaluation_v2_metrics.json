@@ -1,0 +1,104 @@
+{
+  "rules": {
+    "evaluator_version": "2.0",
+    "normalization_schema_version": "1.0",
+    "dataset_size": 9,
+    "strict": {
+      "scalar_macro_accuracy": 0.6667,
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 1,
+          "false_positive": 3,
+          "false_negative": 37,
+          "precision": 0.25,
+          "recall": 0.0263,
+          "f1": 0.0476
+        },
+        "required_tools": {
+          "true_positive": 0,
+          "false_positive": 1,
+          "false_negative": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "preferred_hard_skills": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "preferred_experience": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 15,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "list_micro": {
+        "true_positive": 1,
+        "false_positive": 4,
+        "false_negative": 72,
+        "precision": 0.2,
+        "recall": 0.0137,
+        "f1": 0.0256
+      },
+      "strict_extra_rate": 0.8
+    },
+    "normalized": {
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 1,
+          "false_positive": 3,
+          "false_negative": 37,
+          "precision": 0.25,
+          "recall": 0.0263,
+          "f1": 0.0476
+        },
+        "required_tools": {
+          "true_positive": 0,
+          "false_positive": 1,
+          "false_negative": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "preferred_hard_skills": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "preferred_experience": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 15,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "list_micro": {
+        "true_positive": 1,
+        "false_positive": 4,
+        "false_negative": 72,
+        "precision": 0.2,
+        "recall": 0.0137,
+        "f1": 0.0256
+      }
+    },
+    "groundedness": {
+      "predicted_item_count": 5,
+      "alias_resolved_item_count": 0,
+      "source_supported_extra_count": 4,
+      "potential_unsupported_count": 0,
+      "potential_unsupported_rate": 0.0
+    }
+  }
+}
