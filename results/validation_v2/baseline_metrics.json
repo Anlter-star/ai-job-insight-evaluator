@@ -1,0 +1,359 @@
+{
+  "method": "keyword_rules_v2_metadata",
+  "dataset": "data\\validation\\validation_dataset.jsonl",
+  "dataset_size": 9,
+  "scalar_metrics": {
+    "job_category": {
+      "correct": 8,
+      "total": 9,
+      "accuracy": 0.8889
+    },
+    "employment_type": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "location": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "salary_yuan_per_day": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "education_min": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "student_status": {
+      "correct": 7,
+      "total": 9,
+      "accuracy": 0.7778
+    },
+    "graduation_year": {
+      "correct": 8,
+      "total": 9,
+      "accuracy": 0.8889
+    },
+    "work_days_per_week": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "internship_months": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    }
+  },
+  "scalar_macro_accuracy": 0.9506,
+  "list_metrics": {
+    "required_hard_skills": {
+      "true_positive": 1,
+      "false_positive": 3,
+      "false_negative": 37,
+      "precision": 0.25,
+      "recall": 0.0263,
+      "f1": 0.0476
+    },
+    "required_tools": {
+      "true_positive": 0,
+      "false_positive": 1,
+      "false_negative": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "preferred_hard_skills": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "preferred_experience": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 15,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "list_micro": {
+    "true_positive": 1,
+    "false_positive": 4,
+    "false_negative": 72,
+    "precision": 0.2,
+    "recall": 0.0137,
+    "f1": 0.0256
+  },
+  "hallucination_rate": 0.8,
+  "job_errors": [
+    {
+      "job_id": "VAL_PM_001",
+      "scalar_errors": {
+        "student_status": {
+          "gold": "在校生",
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "AI及Agent产品分析",
+            "AI快速原型开发",
+            "Agent基本原理",
+            "Vibe Coding"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "AI行业前沿关注",
+            "Agent或AI工具迭代实践"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "前端开发经验",
+            "后端开发经验",
+            "开源项目经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_PM_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "产品设计工具",
+            "文档编写与汇报",
+            "需求挖掘与产品方案落地",
+            "项目管理方法"
+          ],
+          "extra": [
+            "项目管理"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_PM_003",
+      "scalar_errors": {
+        "graduation_year": {
+          "gold": {
+            "exact": 2027
+          },
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "PRD撰写",
+            "原型设计",
+            "需求挖掘"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "多模态大模型或Agent研究",
+            "实验研究与评估",
+            "工具调用与推理决策基本原理",
+            "强化学习基本原理",
+            "模型训练基本原理",
+            "算法实现"
+          ],
+          "extra": []
+        },
+        "required_tools": {
+          "missing": [
+            "PyTorch",
+            "Python"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "Agent模型训练、蒸馏或微调",
+            "多模态或Agentic RL研究",
+            "失败案例分析",
+            "模型评测体系与数据迭代闭环"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "ACM、NOI、NOIP或代码竞赛获奖",
+            "CCF A会论文投稿经历",
+            "开源工作经历",
+            "科研项目经历"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_002",
+      "scalar_errors": {
+        "job_category": {
+          "gold": "大模型评测",
+          "prediction": "产品经理"
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "AI自动标注与评分分析",
+            "Prompt设计",
+            "Vibe Coding",
+            "简单脚本与批量数据处理",
+            "视频内容质量评测",
+            "评测标准拆解",
+            "错误归纳与改进"
+          ],
+          "extra": []
+        },
+        "required_tools": {
+          "missing": [
+            "Claude",
+            "Codex"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "AI标注项目经验",
+            "Prompt设计或评测项目成果",
+            "内容分析经验",
+            "视频创作经验",
+            "质量评测经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_LLMEVAL_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "参考代码编写调试",
+            "数值误差与收敛分析",
+            "测试用例设计",
+            "物理推导与数值计算",
+            "物理科学性复核",
+            "英文科研文献阅读"
+          ],
+          "extra": []
+        },
+        "required_tools": {
+          "missing": [
+            "LaTeX",
+            "NumPy、SciPy或SymPy",
+            "Python"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "MATLAB",
+            "Mathematica"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_001",
+      "scalar_errors": {
+        "student_status": {
+          "gold": "在校生",
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "数理统计基础"
+          ],
+          "extra": [
+            "项目管理"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "ECharts",
+            "Tableau"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "内容平台数据分析经验",
+            "大厂增长业务实习经验",
+            "项目管理或跨团队协作经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "Python编程",
+            "完整数据分析流程",
+            "数据建模与挖掘",
+            "机器学习",
+            "深度学习",
+            "至少两种算法原理"
+          ],
+          "extra": [
+            "SQL"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Oracle或MySQL",
+            "Python"
+          ],
+          "extra": [
+            "MySQL"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "VAL_DA_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_tools": {
+          "missing": [
+            "Office"
+          ],
+          "extra": []
+        }
+      }
+    }
+  ]
+}

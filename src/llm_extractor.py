@@ -15,11 +15,12 @@ from urllib.request import Request, urlopen
 from src.data_loader import PROJECT_ROOT, compose_source_text
 
 
-DEFAULT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "job_extraction_v1.txt"
+DEFAULT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "job_extraction_v2.txt"
 EXPECTED_FIELDS = {
     "job_category",
     "employment_type",
     "location",
+    "salary_yuan_per_day",
     "education_min",
     "student_status",
     "graduation_year",
@@ -136,17 +137,29 @@ def validate_prediction(prediction: Any) -> dict[str, Any]:
     year = normalized["graduation_year"]
     if year is not None and (
         not isinstance(year, dict)
-        or set(year) != {"min"}
-        or not isinstance(year["min"], int)
+        or set(year) not in ({"min"}, {"exact"})
+        or not all(isinstance(value, int) for value in year.values())
     ):
-        raise LLMResponseError("graduation_year must be {\"min\": year} or null")
+        raise LLMResponseError(
+            "graduation_year must be {\"min\": year}, {\"exact\": year}, or null"
+        )
+
+    salary = normalized["salary_yuan_per_day"]
+    if salary is not None and (
+        not isinstance(salary, dict)
+        or set(salary) != {"min", "max"}
+        or not all(isinstance(value, int) for value in salary.values())
+    ):
+        raise LLMResponseError(
+            "salary_yuan_per_day must be {\"min\": value, \"max\": value} or null"
+        )
     return normalized
 
 
 class OpenAICompatibleExtractor:
     """Call an OpenAI-compatible /chat/completions endpoint."""
 
-    prompt_version = "job_extraction_v1"
+    prompt_version = "job_extraction_v2"
 
     def __init__(self, config: LLMConfig, prompt_path: Path = DEFAULT_PROMPT_PATH):
         self.config = config

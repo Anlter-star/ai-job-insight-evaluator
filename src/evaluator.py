@@ -9,6 +9,7 @@ SCALAR_FIELDS = [
     "job_category",
     "employment_type",
     "location",
+    "salary_yuan_per_day",
     "education_min",
     "student_status",
     "graduation_year",

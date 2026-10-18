@@ -107,7 +107,7 @@ def _matches(text: str, pattern: str) -> bool:
 class RuleBasedExtractor:
     """Extract a small, auditable subset of the annotation schema."""
 
-    method_name = "keyword_rules_v1"
+    method_name = "keyword_rules_v2_metadata"
 
     def extract(self, record: dict[str, Any]) -> dict[str, Any]:
         input_data = record["input"]
@@ -115,6 +115,7 @@ class RuleBasedExtractor:
         responsibilities = input_data["responsibilities"]
         requirements = input_data["requirements"]
         preferred = input_data["preferred_qualifications"]
+        page_metadata = input_data.get("page_metadata", {})
         full_text = "\n".join([title, responsibilities, requirements, preferred])
 
         required_tools, preferred_tools = self._extract_tools(requirements, preferred)
@@ -126,12 +127,19 @@ class RuleBasedExtractor:
         return {
             "job_category": self._extract_category(title, full_text),
             "employment_type": "实习" if "实习" in full_text else None,
-            "location": input_data["city"] or None,
-            "education_min": self._extract_education(requirements),
+            "location": page_metadata.get("location", input_data["city"]) or None,
+            "salary_yuan_per_day": page_metadata.get("salary_yuan_per_day"),
+            "education_min": page_metadata.get("education")
+            if "education" in page_metadata
+            else self._extract_education(requirements),
             "student_status": self._extract_student_status(requirements),
             "graduation_year": self._extract_graduation_year(requirements),
-            "work_days_per_week": self._extract_work_days(requirements),
-            "internship_months": self._extract_internship_months(requirements),
+            "work_days_per_week": page_metadata.get("work_days_per_week")
+            if "work_days_per_week" in page_metadata
+            else self._extract_work_days(requirements),
+            "internship_months": page_metadata.get("internship_months")
+            if "internship_months" in page_metadata
+            else self._extract_internship_months(requirements),
             "required_hard_skills": self._extract_by_patterns(
                 requirements, HARD_SKILL_PATTERNS
             ),

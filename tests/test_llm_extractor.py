@@ -20,6 +20,7 @@ VALID_PREDICTION = {
     "job_category": "产品经理",
     "employment_type": "实习",
     "location": "上海",
+    "salary_yuan_per_day": {"min": 200, "max": 300},
     "education_min": "本科",
     "student_status": "在校生",
     "graduation_year": None,
@@ -60,6 +61,13 @@ class LLMExtractorTests(unittest.TestCase):
     def test_validation_rejects_missing_fields(self) -> None:
         with self.assertRaises(LLMResponseError):
             validate_prediction({"job_category": "产品经理"})
+
+    def test_validation_accepts_exact_graduation_year(self) -> None:
+        prediction = dict(VALID_PREDICTION)
+        prediction["graduation_year"] = {"exact": 2027}
+        self.assertEqual(
+            validate_prediction(prediction)["graduation_year"], {"exact": 2027}
+        )
 
     @patch("src.llm_extractor.urlopen")
     def test_extracts_json_from_compatible_api(self, mocked_urlopen) -> None:

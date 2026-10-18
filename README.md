@@ -139,6 +139,18 @@ python -m src.compare_models --results-dir results/validation
 
 首轮冻结验证结果：规则技能F1为2.56%，DeepSeek技能F1为19.00%；单值字段准确率分别为66.67%和70.83%。本轮暴露出顶部元数据未进入模型输入、标签粒度不统一和开发集别名表泛化不足等问题。完整分析见 `docs/validation_report_v1.md`。
 
+### 顶部元数据输入 v2
+
+数据记录现已把页面顶部直接展示的地点、日薪、学历、到岗天数和实习期限保存在 `input.page_metadata`。`compose_source_text` 会将其作为原始输入传给模型；规则v2也优先采用这些值。Prompt v2同时增加了日薪字段、精确毕业年份和顶部/正文冲突规则。
+
+为保留首轮盲测结果，v2实验写入新目录：
+
+```bash
+python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
+python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
+python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
+```
+
 ## 仓库结构
 
 ```text

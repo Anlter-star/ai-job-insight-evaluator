@@ -26,6 +26,15 @@ REQUIRED_INPUT_FIELDS = {
     "responsibilities",
     "requirements",
     "preferred_qualifications",
+    "page_metadata",
+}
+
+REQUIRED_PAGE_METADATA_FIELDS = {
+    "location",
+    "salary_yuan_per_day",
+    "education",
+    "work_days_per_week",
+    "internship_months",
 }
 
 
@@ -44,6 +53,18 @@ def _validate_record(record: dict[str, Any], line_number: int) -> None:
     if missing_input:
         raise DatasetValidationError(
             f"Line {line_number} is missing input fields: {sorted(missing_input)}"
+        )
+
+    page_metadata = record["input"]["page_metadata"]
+    if not isinstance(page_metadata, dict):
+        raise DatasetValidationError(
+            f"Line {line_number}: input.page_metadata must be an object"
+        )
+    missing_metadata = REQUIRED_PAGE_METADATA_FIELDS - page_metadata.keys()
+    if missing_metadata:
+        raise DatasetValidationError(
+            f"Line {line_number} is missing page metadata fields: "
+            f"{sorted(missing_metadata)}"
         )
 
     if not isinstance(record["gold"], dict):
@@ -88,7 +109,23 @@ def compose_source_text(record: dict[str, Any]) -> str:
     """Combine only model-visible input fields into one extraction text."""
 
     input_data = record["input"]
+    metadata = input_data.get("page_metadata", {})
+    salary = metadata.get("salary_yuan_per_day")
+    salary_text = (
+        f"{salary.get('min')}-{salary.get('max')}元/天"
+        if isinstance(salary, dict)
+        else "未提供"
+    )
+    page_metadata_text = (
+        "页面顶部结构化信息："
+        f"地点={metadata.get('location') or '未提供'}；"
+        f"日薪={salary_text}；"
+        f"学历={metadata.get('education') or '未提供'}；"
+        f"每周到岗={metadata.get('work_days_per_week') if metadata.get('work_days_per_week') is not None else '未提供'}天；"
+        f"实习期限={metadata.get('internship_months') if metadata.get('internship_months') is not None else '未提供'}个月"
+    )
     parts = [
+        page_metadata_text,
         f"职位名称：{input_data['job_title']}",
         f"公司：{input_data['company']}",
         f"城市：{input_data['city']}",

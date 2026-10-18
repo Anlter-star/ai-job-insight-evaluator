@@ -34,12 +34,20 @@ class RuleBaselineTests(unittest.TestCase):
         self.assertEqual(prediction["work_days_per_week"], 4)
         self.assertEqual(prediction["internship_months"], 3)
 
-    def test_data_job_extracts_sql_and_textual_work_days(self) -> None:
+    def test_page_metadata_is_used_for_conflicting_work_days(self) -> None:
+        prediction = self.extractor.extract(self.by_id["DA_002"])
+        self.assertEqual(prediction["work_days_per_week"], 4)
+        self.assertEqual(prediction["internship_months"], 3)
+        self.assertEqual(
+            prediction["salary_yuan_per_day"], {"min": 200, "max": 300}
+        )
+
+    def test_data_job_extracts_sql_and_prefers_page_work_days(self) -> None:
         prediction = self.extractor.extract(self.by_id["DA_002"])
         self.assertEqual(prediction["job_category"], "数据分析")
         self.assertIn("SQL", prediction["required_hard_skills"])
         self.assertIn("Office", prediction["required_tools"])
-        self.assertEqual(prediction["work_days_per_week"], 3)
+        self.assertEqual(prediction["work_days_per_week"], 4)
 
     def test_evaluator_returns_bounded_metrics(self) -> None:
         predictions = [
