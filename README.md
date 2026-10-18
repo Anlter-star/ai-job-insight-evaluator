@@ -33,7 +33,8 @@
 - [x] 编写标注规范
 - [x] 实现规则基线
 - [x] 完成兼容多种模型的大模型提取器
-- [ ] 填写 API 配置并运行大模型评测
+- [x] 填写 API 配置并运行首轮大模型评测
+- [x] 实现严格匹配、归一化匹配和原文依据检查的评测器 v2
 - [ ] 开发可视化页面
 
 ## 运行规则基线
@@ -80,7 +81,29 @@ python -m src.run_llm
 python -m src.compare_models
 ```
 
-完整运行会在本地生成 `results/llm_predictions.jsonl` 和 `results/llm_metrics.json`。这两个文件默认不提交，以免不同模型或重复实验的输出互相覆盖；正式实验结果确认后可另行选择性纳入版本管理。
+完整运行会生成 `results/llm_predictions.jsonl` 和 `results/llm_metrics.json`。仓库保留首轮正式实验结果；使用 `llm_smoke` 等其他前缀产生的临时结果不会提交。
+
+## 运行评测器 v2
+
+评测器 v2 复用保存的规则预测和大模型预测，不会再次请求模型：
+
+```bash
+python -m src.run_evaluation_v2
+```
+
+它同时报告严格匹配与人工审核同义词后的归一化匹配，并把额外预测拆分为“原文支持、需要复核”和“潜在无依据”两类。详细定义见 `docs/evaluation_methodology.md`，输出文件为：
+
+- `results/evaluation_v2_metrics.json`
+- `results/error_analysis.jsonl`
+
+## 首轮大模型评测结果
+
+| 方法 | 单值字段准确率 | 严格技能 F1 | 归一化技能 F1 | 潜在无依据率 |
+| --- | ---: | ---: | ---: | ---: |
+| 关键词规则 v1 | 79.17% | 85.31% | 85.31% | 0.00% |
+| DeepSeek Flash + Prompt v1 | 75.00% | 42.16% | 70.97% | 0.00% |
+
+严格匹配会把“开发AI Agent”和“AI Agent开发”等同义表达判为错误。评测器 v2 使用字段级、人工审核的映射后，DeepSeek 技能 F1 提升至70.97%。第一版62.86%的所谓“幻觉率”实际是严格额外项率，其中包含同义表达、标签粒度和字段归属差异；详细分析见 `docs/evaluation_report_v2.md`。
 
 ## 首轮基线结果
 

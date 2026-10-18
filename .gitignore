@@ -20,6 +20,8 @@ Thumbs.db
 results/*.csv
 results/llm_*.json
 results/llm_*.jsonl
+!results/llm_metrics.json
+!results/llm_predictions.jsonl
 results/figures/*
 !results/.gitkeep
 !results/figures/.gitkeep

@@ -1,0 +1,206 @@
+{
+  "rules": {
+    "evaluator_version": "2.0",
+    "normalization_schema_version": "1.0",
+    "dataset_size": 9,
+    "strict": {
+      "scalar_macro_accuracy": 0.7917,
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 19,
+          "false_positive": 1,
+          "false_negative": 18,
+          "precision": 0.95,
+          "recall": 0.5135,
+          "f1": 0.6667
+        },
+        "required_tools": {
+          "true_positive": 7,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "preferred_hard_skills": {
+          "true_positive": 9,
+          "false_positive": 1,
+          "false_negative": 0,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474
+        },
+        "preferred_experience": {
+          "true_positive": 26,
+          "false_positive": 0,
+          "false_negative": 1,
+          "precision": 1.0,
+          "recall": 0.963,
+          "f1": 0.9811
+        }
+      },
+      "list_micro": {
+        "true_positive": 61,
+        "false_positive": 2,
+        "false_negative": 19,
+        "precision": 0.9683,
+        "recall": 0.7625,
+        "f1": 0.8531
+      },
+      "strict_extra_rate": 0.0317
+    },
+    "normalized": {
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 19,
+          "false_positive": 1,
+          "false_negative": 18,
+          "precision": 0.95,
+          "recall": 0.5135,
+          "f1": 0.6667
+        },
+        "required_tools": {
+          "true_positive": 7,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "preferred_hard_skills": {
+          "true_positive": 9,
+          "false_positive": 1,
+          "false_negative": 0,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474
+        },
+        "preferred_experience": {
+          "true_positive": 26,
+          "false_positive": 0,
+          "false_negative": 1,
+          "precision": 1.0,
+          "recall": 0.963,
+          "f1": 0.9811
+        }
+      },
+      "list_micro": {
+        "true_positive": 61,
+        "false_positive": 2,
+        "false_negative": 19,
+        "precision": 0.9683,
+        "recall": 0.7625,
+        "f1": 0.8531
+      }
+    },
+    "groundedness": {
+      "predicted_item_count": 63,
+      "alias_resolved_item_count": 0,
+      "source_supported_extra_count": 2,
+      "potential_unsupported_count": 0,
+      "potential_unsupported_rate": 0.0
+    }
+  },
+  "deepseek_flash_v1": {
+    "evaluator_version": "2.0",
+    "normalization_schema_version": "1.0",
+    "dataset_size": 9,
+    "strict": {
+      "scalar_macro_accuracy": 0.75,
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 11,
+          "false_positive": 29,
+          "false_negative": 26,
+          "precision": 0.275,
+          "recall": 0.2973,
+          "f1": 0.2857
+        },
+        "required_tools": {
+          "true_positive": 5,
+          "false_positive": 1,
+          "false_negative": 2,
+          "precision": 0.8333,
+          "recall": 0.7143,
+          "f1": 0.7692
+        },
+        "preferred_hard_skills": {
+          "true_positive": 6,
+          "false_positive": 24,
+          "false_negative": 3,
+          "precision": 0.2,
+          "recall": 0.6667,
+          "f1": 0.3077
+        },
+        "preferred_experience": {
+          "true_positive": 17,
+          "false_positive": 12,
+          "false_negative": 10,
+          "precision": 0.5862,
+          "recall": 0.6296,
+          "f1": 0.6071
+        }
+      },
+      "list_micro": {
+        "true_positive": 39,
+        "false_positive": 66,
+        "false_negative": 41,
+        "precision": 0.3714,
+        "recall": 0.4875,
+        "f1": 0.4216
+      },
+      "strict_extra_rate": 0.6286
+    },
+    "normalized": {
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 27,
+          "false_positive": 15,
+          "false_negative": 10,
+          "precision": 0.6429,
+          "recall": 0.7297,
+          "f1": 0.6835
+        },
+        "required_tools": {
+          "true_positive": 5,
+          "false_positive": 1,
+          "false_negative": 2,
+          "precision": 0.8333,
+          "recall": 0.7143,
+          "f1": 0.7692
+        },
+        "preferred_hard_skills": {
+          "true_positive": 7,
+          "false_positive": 20,
+          "false_negative": 2,
+          "precision": 0.2593,
+          "recall": 0.7778,
+          "f1": 0.3889
+        },
+        "preferred_experience": {
+          "true_positive": 27,
+          "false_positive": 4,
+          "false_negative": 0,
+          "precision": 0.871,
+          "recall": 1.0,
+          "f1": 0.931
+        }
+      },
+      "list_micro": {
+        "true_positive": 66,
+        "false_positive": 40,
+        "false_negative": 14,
+        "precision": 0.6226,
+        "recall": 0.825,
+        "f1": 0.7097
+      }
+    },
+    "groundedness": {
+      "predicted_item_count": 105,
+      "alias_resolved_item_count": 26,
+      "source_supported_extra_count": 40,
+      "potential_unsupported_count": 0,
+      "potential_unsupported_rate": 0.0
+    }
+  }
+}

@@ -1,0 +1,448 @@
+{
+  "method": "llm:deepseek-flash:job_extraction_v1",
+  "model": "deepseek-flash",
+  "base_url": "https://api.deepseek.com",
+  "prompt_version": "job_extraction_v1",
+  "dataset": "data\\annotated\\gold_dataset.jsonl",
+  "dataset_size": 9,
+  "scalar_metrics": {
+    "job_category": {
+      "correct": 7,
+      "total": 9,
+      "accuracy": 0.7778
+    },
+    "employment_type": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "location": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "education_min": {
+      "correct": 6,
+      "total": 9,
+      "accuracy": 0.6667
+    },
+    "student_status": {
+      "correct": 8,
+      "total": 9,
+      "accuracy": 0.8889
+    },
+    "graduation_year": {
+      "correct": 9,
+      "total": 9,
+      "accuracy": 1.0
+    },
+    "work_days_per_week": {
+      "correct": 3,
+      "total": 9,
+      "accuracy": 0.3333
+    },
+    "internship_months": {
+      "correct": 3,
+      "total": 9,
+      "accuracy": 0.3333
+    }
+  },
+  "scalar_macro_accuracy": 0.75,
+  "list_metrics": {
+    "required_hard_skills": {
+      "true_positive": 11,
+      "false_positive": 29,
+      "false_negative": 26,
+      "precision": 0.275,
+      "recall": 0.2973,
+      "f1": 0.2857
+    },
+    "required_tools": {
+      "true_positive": 5,
+      "false_positive": 1,
+      "false_negative": 2,
+      "precision": 0.8333,
+      "recall": 0.7143,
+      "f1": 0.7692
+    },
+    "preferred_hard_skills": {
+      "true_positive": 6,
+      "false_positive": 24,
+      "false_negative": 3,
+      "precision": 0.2,
+      "recall": 0.6667,
+      "f1": 0.3077
+    },
+    "preferred_experience": {
+      "true_positive": 17,
+      "false_positive": 12,
+      "false_negative": 10,
+      "precision": 0.5862,
+      "recall": 0.6296,
+      "f1": 0.6071
+    }
+  },
+  "list_micro": {
+    "true_positive": 39,
+    "false_positive": 66,
+    "false_negative": 41,
+    "precision": 0.3714,
+    "recall": 0.4875,
+    "f1": 0.4216
+  },
+  "hallucination_rate": 0.6286,
+  "job_errors": [
+    {
+      "job_id": "PM_001",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 6,
+          "prediction": null
+        }
+      },
+      "list_errors": {}
+    },
+    {
+      "job_id": "LLMEVAL_001",
+      "scalar_errors": {
+        "student_status": {
+          "gold": null,
+          "prediction": "在校生"
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解策略产品或评测工程师工作流",
+            "识别AI逻辑漏洞与语言问题"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "Claude Code",
+            "Cursor"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [],
+          "extra": [
+            "可实习6个月及以上",
+            "熟练使用Cursor、Claude Code等AI IDE工具"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "DA_002",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": 3
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [],
+          "extra": [
+            "数据分析"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "PM_002",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 10,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "API与Webhook接口认证及调用",
+            "事件触发与流程机制",
+            "数据表关系设计",
+            "规则制定",
+            "请求参数与返回结果解析"
+          ],
+          "extra": [
+            "MongoDB",
+            "MySQL",
+            "文档能力",
+            "系统搭建中表与表之间关系、事件触发、流程机制、规则制定",
+            "集成API/Webhook的接口认证、请求方式、请求参数和返回结果解析"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "MongoDB",
+            "MySQL"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "低代码系统实施搭建经验",
+            "相关活动或比赛经验",
+            "软件开发经验"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "低代码系统实施搭建经验",
+            "软件开发经验"
+          ],
+          "extra": [
+            "软件开发或实施搭建低代码系统的实习经验"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "PM_003",
+      "scalar_errors": {
+        "education_min": {
+          "gold": "硕士",
+          "prediction": null
+        },
+        "work_days_per_week": {
+          "gold": 5,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 5,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "多任务管理",
+            "客户沟通与协调",
+            "独立决策与问题解决"
+          ],
+          "extra": [
+            "外部客户交流与协调"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "LLMEVAL_002",
+      "scalar_errors": {
+        "job_category": {
+          "gold": "大模型评测",
+          "prediction": "产品经理"
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解视频生成工具",
+            "审美与视频内容判断",
+            "影视创作要素知识"
+          ],
+          "extra": [
+            "光影",
+            "审美与视频内容判断能力",
+            "景别",
+            "色彩",
+            "视频生成类工具",
+            "运镜",
+            "镜头"
+          ]
+        },
+        "required_tools": {
+          "missing": [],
+          "extra": [
+            "剪辑软件"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "内容审核",
+            "动画",
+            "动画制作",
+            "叙事",
+            "摄影",
+            "数字艺术",
+            "数据标注",
+            "游戏美术风格",
+            "游戏设计",
+            "编导",
+            "美术",
+            "视频创作",
+            "质量评估"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "动画制作经验",
+            "独立视频创作经验"
+          ],
+          "extra": [
+            "了解海内外网络内容",
+            "动画制作",
+            "深度游戏玩家",
+            "独立视频创作"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "LLMEVAL_003",
+      "scalar_errors": {
+        "job_category": {
+          "gold": "大模型评测",
+          "prediction": "产品经理"
+        },
+        "education_min": {
+          "gold": "本科",
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "了解云计算、GPU资源或MaaS平台",
+            "了解大模型训练与推理平台",
+            "产品或运营思维",
+            "将技术认知转化为用户需求和产品方案"
+          ],
+          "extra": [
+            "GPU资源",
+            "MaaS平台",
+            "云计算",
+            "产品思维",
+            "大模型训练与推理平台",
+            "执行力",
+            "沟通协作能力",
+            "自驱力",
+            "运营思维"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "熟悉大模型MaaS平台、训练平台、推理平台或公有云GPU产品"
+          ],
+          "extra": [
+            "公有云GPU产品",
+            "大模型MaaS平台",
+            "推理平台",
+            "训练平台"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "AI平台相关实习经验",
+            "云计算相关实习经验"
+          ],
+          "extra": [
+            "AI平台实习经验",
+            "云计算实习经验"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "DA_001",
+      "scalar_errors": {
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "互联网电商行业知识",
+            "商品模型、搜索优化和品类规划知识",
+            "持续规划与体系化优化",
+            "数据敏感度"
+          ],
+          "extra": [
+            "数据敏感"
+          ]
+        },
+        "preferred_hard_skills": {
+          "missing": [],
+          "extra": [
+            "AI行业经验",
+            "B端产品经验",
+            "商品中心产品经验",
+            "策略产品经验"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "B端产品经验",
+            "商品中心产品经验",
+            "海外留学经历",
+            "策略产品经验"
+          ],
+          "extra": [
+            "B端或策略产品经验",
+            "商品中心产品工作经验",
+            "海外留学经验"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "DA_003",
+      "scalar_errors": {
+        "education_min": {
+          "gold": "硕士",
+          "prediction": null
+        },
+        "work_days_per_week": {
+          "gold": 4,
+          "prediction": null
+        },
+        "internship_months": {
+          "gold": 3,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "AI Agent开发",
+            "基础数据分析",
+            "数据处理",
+            "数据异常模式识别",
+            "脚本开发与数据校验"
+          ],
+          "extra": [
+            "开发AI Agent",
+            "开发脚本校验数据",
+            "数据分析能力",
+            "数据处理能力",
+            "识别数据异常模式"
+          ]
+        }
+      }
+    }
+  ]
+}
