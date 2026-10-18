@@ -12,9 +12,9 @@
       "accuracy": 0.7778
     },
     "employment_type": {
-      "correct": 5,
+      "correct": 9,
       "total": 9,
-      "accuracy": 0.5556
+      "accuracy": 1.0
     },
     "location": {
       "correct": 9,
@@ -52,7 +52,7 @@
       "accuracy": 1.0
     }
   },
-  "scalar_macro_accuracy": 0.8889,
+  "scalar_macro_accuracy": 0.9383,
   "list_metrics": {
     "required_hard_skills": {
       "true_positive": 8,
@@ -144,12 +144,7 @@
     },
     {
       "job_id": "VAL_PM_002",
-      "scalar_errors": {
-        "employment_type": {
-          "gold": null,
-          "prediction": "实习"
-        }
-      },
+      "scalar_errors": {},
       "list_errors": {
         "required_hard_skills": {
           "missing": [
@@ -349,12 +344,7 @@
     },
     {
       "job_id": "VAL_LLMEVAL_003",
-      "scalar_errors": {
-        "employment_type": {
-          "gold": null,
-          "prediction": "实习"
-        }
-      },
+      "scalar_errors": {},
       "list_errors": {
         "required_hard_skills": {
           "missing": [
@@ -424,12 +414,7 @@
     },
     {
       "job_id": "VAL_DA_002",
-      "scalar_errors": {
-        "employment_type": {
-          "gold": null,
-          "prediction": "实习"
-        }
-      },
+      "scalar_errors": {},
       "list_errors": {
         "required_hard_skills": {
           "missing": [
@@ -470,12 +455,7 @@
     },
     {
       "job_id": "VAL_DA_003",
-      "scalar_errors": {
-        "employment_type": {
-          "gold": null,
-          "prediction": "实习"
-        }
-      },
+      "scalar_errors": {},
       "list_errors": {
         "required_hard_skills": {
           "missing": [],

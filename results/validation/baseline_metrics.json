@@ -9,9 +9,9 @@
       "accuracy": 0.8889
     },
     "employment_type": {
-      "correct": 9,
+      "correct": 5,
       "total": 9,
-      "accuracy": 1.0
+      "accuracy": 0.5556
     },
     "location": {
       "correct": 9,
@@ -44,7 +44,7 @@
       "accuracy": 0.2222
     }
   },
-  "scalar_macro_accuracy": 0.6667,
+  "scalar_macro_accuracy": 0.6111,
   "list_metrics": {
     "required_hard_skills": {
       "true_positive": 1,
@@ -145,6 +145,10 @@
         },
         "internship_months": {
           "gold": 6,
+          "prediction": null
+        },
+        "employment_type": {
+          "gold": "实习",
           "prediction": null
         }
       },
@@ -304,6 +308,10 @@
         "internship_months": {
           "gold": 3,
           "prediction": null
+        },
+        "employment_type": {
+          "gold": "实习",
+          "prediction": null
         }
       },
       "list_errors": {
@@ -383,6 +391,10 @@
         "internship_months": {
           "gold": 6,
           "prediction": null
+        },
+        "employment_type": {
+          "gold": "实习",
+          "prediction": null
         }
       },
       "list_errors": {
@@ -423,6 +435,10 @@
         },
         "internship_months": {
           "gold": 3,
+          "prediction": null
+        },
+        "employment_type": {
+          "gold": "实习",
           "prediction": null
         }
       },

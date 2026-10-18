@@ -4,7 +4,7 @@
     "normalization_schema_version": "1.0",
     "dataset_size": 9,
     "strict": {
-      "scalar_macro_accuracy": 0.9506,
+      "scalar_macro_accuracy": 0.9012,
       "list_metrics": {
         "required_hard_skills": {
           "true_positive": 1,
@@ -106,7 +106,7 @@
     "normalization_schema_version": "1.0",
     "dataset_size": 9,
     "strict": {
-      "scalar_macro_accuracy": 0.8889,
+      "scalar_macro_accuracy": 0.9383,
       "list_metrics": {
         "required_hard_skills": {
           "true_positive": 8,

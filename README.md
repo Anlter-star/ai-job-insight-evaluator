@@ -137,7 +137,7 @@ python -m src.compare_models --results-dir results/validation
 
 大模型提取支持断点续跑；若中途网络失败，重新执行同一条 `run_llm` 命令即可跳过已完成岗位。
 
-首轮冻结验证结果：规则技能F1为2.56%，DeepSeek技能F1为19.00%；单值字段准确率分别为66.67%和70.83%。本轮暴露出顶部元数据未进入模型输入、标签粒度不统一和开发集别名表泛化不足等问题。完整分析见 `docs/validation_report_v1.md`。
+首轮冻结预测经标准答案审计后重新评测：规则技能F1为2.56%，DeepSeek技能F1为19.00%；共同8个单值字段准确率分别为61.11%和65.28%。本轮暴露出顶部元数据与数据集级采集上下文未进入模型输入、标签粒度不统一和开发集别名表泛化不足等问题。完整分析见 `docs/validation_report_v1.md`。
 
 ### 顶部元数据输入 v2
 
@@ -151,7 +151,7 @@ python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --resul
 python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
 ```
 
-DeepSeek + Prompt v2已完成：共同8个单值字段准确率从70.83%提升至87.50%，学历、毕业年份、到岗天数和实习期限均达到100%，新增日薪字段为100%；技能F1由19.00%小幅提升至20.56%。详细结果与新发现的用工类型过度推断问题见 `docs/metadata_input_v2_report.md`。
+DeepSeek + Prompt v2已完成：共同8个单值字段准确率从65.28%提升至93.06%，全部9个单值字段为93.83%；用工类型、学历、毕业年份、到岗天数、实习期限和新增日薪字段均达到100%，技能F1由19.00%小幅提升至20.56%。标注审计和详细结果见 `docs/metadata_input_v2_report.md`。
 
 ## 仓库结构
 

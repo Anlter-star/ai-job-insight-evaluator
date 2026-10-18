@@ -31,6 +31,12 @@ class ValidationDatasetTests(unittest.TestCase):
             Counter({"产品经理": 3, "大模型评测": 3, "数据分析": 3}),
         )
 
+    def test_validation_collection_contains_only_internships(self) -> None:
+        for record in self.validation_records:
+            with self.subTest(job_id=record["job_id"]):
+                self.assertEqual(record["gold"]["employment_type"], "实习")
+                self.assertIn("employment_type", record["evidence"])
+
     def test_split_marker_and_ids_are_unique(self) -> None:
         validation_ids = {record["job_id"] for record in self.validation_records}
         development_ids = {record["job_id"] for record in self.development_records}
