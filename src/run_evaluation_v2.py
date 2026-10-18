@@ -58,7 +58,7 @@ def run(
         "rules": baseline_predictions or results_dir / "baseline_predictions.jsonl"
     }
     if include_llm:
-        prediction_files["deepseek_flash_v1"] = (
+        prediction_files["llm"] = (
             llm_predictions or results_dir / "llm_predictions.jsonl"
         )
     gold_records = load_jsonl(dataset_path)
@@ -68,8 +68,13 @@ def run(
     for method, path in prediction_files.items():
         predictions = _load_predictions(path)
         metrics, analyses = evaluate_v2(gold_records, predictions)
-        all_metrics[method] = metrics
-        all_analyses.extend({"evaluation_method": method, **item} for item in analyses)
+        evaluation_method = (
+            predictions[0].get("method", "llm") if method == "llm" else method
+        )
+        all_metrics[evaluation_method] = metrics
+        all_analyses.extend(
+            {"evaluation_method": evaluation_method, **item} for item in analyses
+        )
 
     results_dir.mkdir(parents=True, exist_ok=True)
     _write_json(results_dir / "evaluation_v2_metrics.json", all_metrics)
@@ -99,11 +104,15 @@ def main() -> None:
         include_llm=not args.rules_only,
     )
 
-    print(f"{'Method':<22} {'Strict F1':>11} {'Normalized F1':>15} {'Potential unsupported':>23}")
-    print("-" * 75)
+    method_width = max(22, *(len(method) for method in all_metrics))
+    print(
+        f"{'Method':<{method_width}} {'Strict F1':>11} "
+        f"{'Normalized F1':>15} {'Potential unsupported':>23}"
+    )
+    print("-" * (method_width + 53))
     for method, metrics in all_metrics.items():
         print(
-            f"{method:<22} "
+            f"{method:<{method_width}} "
             f"{metrics['strict']['list_micro']['f1']:>10.2%} "
             f"{metrics['normalized']['list_micro']['f1']:>14.2%} "
             f"{metrics['groundedness']['potential_unsupported_rate']:>22.2%}"

@@ -36,6 +36,7 @@ class ValidationRunnerTests(unittest.TestCase):
             for record in records:
                 item = dict(rules)
                 item["job_id"] = record["job_id"]
+                item["method"] = "llm:test-model:test-prompt"
                 item["prediction"] = {
                     field: record["gold"][field]
                     for field in rules["prediction"]
@@ -49,7 +50,7 @@ class ValidationRunnerTests(unittest.TestCase):
 
             metrics = run_evaluation_v2(VALIDATION_PATH, output)
             self.assertEqual(metrics["rules"]["dataset_size"], 9)
-            self.assertEqual(metrics["deepseek_flash_v1"]["dataset_size"], 9)
+            self.assertEqual(metrics["llm:test-model:test-prompt"]["dataset_size"], 9)
             self.assertTrue((output / "evaluation_v2_metrics.json").is_file())
             self.assertTrue((output / "error_analysis.jsonl").is_file())
 

@@ -100,5 +100,107 @@
       "potential_unsupported_count": 0,
       "potential_unsupported_rate": 0.0
     }
+  },
+  "llm:deepseek-flash:job_extraction_v2": {
+    "evaluator_version": "2.0",
+    "normalization_schema_version": "1.0",
+    "dataset_size": 9,
+    "strict": {
+      "scalar_macro_accuracy": 0.8889,
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 8,
+          "false_positive": 69,
+          "false_negative": 30,
+          "precision": 0.1039,
+          "recall": 0.2105,
+          "f1": 0.1391
+        },
+        "required_tools": {
+          "true_positive": 6,
+          "false_positive": 9,
+          "false_negative": 4,
+          "precision": 0.4,
+          "recall": 0.6,
+          "f1": 0.48
+        },
+        "preferred_hard_skills": {
+          "true_positive": 5,
+          "false_positive": 26,
+          "false_negative": 5,
+          "precision": 0.1613,
+          "recall": 0.5,
+          "f1": 0.2439
+        },
+        "preferred_experience": {
+          "true_positive": 3,
+          "false_positive": 15,
+          "false_negative": 12,
+          "precision": 0.1667,
+          "recall": 0.2,
+          "f1": 0.1818
+        }
+      },
+      "list_micro": {
+        "true_positive": 22,
+        "false_positive": 119,
+        "false_negative": 51,
+        "precision": 0.156,
+        "recall": 0.3014,
+        "f1": 0.2056
+      },
+      "strict_extra_rate": 0.844
+    },
+    "normalized": {
+      "list_metrics": {
+        "required_hard_skills": {
+          "true_positive": 8,
+          "false_positive": 69,
+          "false_negative": 30,
+          "precision": 0.1039,
+          "recall": 0.2105,
+          "f1": 0.1391
+        },
+        "required_tools": {
+          "true_positive": 6,
+          "false_positive": 9,
+          "false_negative": 4,
+          "precision": 0.4,
+          "recall": 0.6,
+          "f1": 0.48
+        },
+        "preferred_hard_skills": {
+          "true_positive": 5,
+          "false_positive": 26,
+          "false_negative": 5,
+          "precision": 0.1613,
+          "recall": 0.5,
+          "f1": 0.2439
+        },
+        "preferred_experience": {
+          "true_positive": 3,
+          "false_positive": 15,
+          "false_negative": 12,
+          "precision": 0.1667,
+          "recall": 0.2,
+          "f1": 0.1818
+        }
+      },
+      "list_micro": {
+        "true_positive": 22,
+        "false_positive": 119,
+        "false_negative": 51,
+        "precision": 0.156,
+        "recall": 0.3014,
+        "f1": 0.2056
+      }
+    },
+    "groundedness": {
+      "predicted_item_count": 141,
+      "alias_resolved_item_count": 0,
+      "source_supported_extra_count": 100,
+      "potential_unsupported_count": 19,
+      "potential_unsupported_rate": 0.1348
+    }
   }
 }

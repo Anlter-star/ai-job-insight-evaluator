@@ -151,6 +151,8 @@ python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --resul
 python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
 ```
 
+DeepSeek + Prompt v2已完成：共同8个单值字段准确率从70.83%提升至87.50%，学历、毕业年份、到岗天数和实习期限均达到100%，新增日薪字段为100%；技能F1由19.00%小幅提升至20.56%。详细结果与新发现的用工类型过度推断问题见 `docs/metadata_input_v2_report.md`。
+
 ## 仓库结构
 
 ```text

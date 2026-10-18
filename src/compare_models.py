@@ -40,11 +40,15 @@ def main() -> None:
     if v2_path.exists():
         v2 = _load(v2_path)
         print("\nEvaluator v2")
-        print(f"{'Method':<22} {'Strict F1':>11} {'Normalized F1':>15} {'Unsupported':>13}")
-        print("-" * 65)
+        method_width = max(22, *(len(method) for method in v2))
+        print(
+            f"{'Method':<{method_width}} {'Strict F1':>11} "
+            f"{'Normalized F1':>15} {'Unsupported':>13}"
+        )
+        print("-" * (method_width + 43))
         for method, metrics in v2.items():
             print(
-                f"{method:<22} "
+                f"{method:<{method_width}} "
                 f"{metrics['strict']['list_micro']['f1']:>10.2%} "
                 f"{metrics['normalized']['list_micro']['f1']:>14.2%} "
                 f"{metrics['groundedness']['potential_unsupported_rate']:>12.2%}"
