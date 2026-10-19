@@ -1,0 +1,460 @@
+{
+  "method": "keyword_rules_v3_context",
+  "dataset": "data\\test\\test_dataset_v1.jsonl",
+  "dataset_size": 15,
+  "scalar_metrics": {
+    "job_category": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "employment_type": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "location": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "salary_yuan_per_day": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "education_min": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "student_status": {
+      "correct": 14,
+      "total": 15,
+      "accuracy": 0.9333
+    },
+    "graduation_year": {
+      "correct": 14,
+      "total": 15,
+      "accuracy": 0.9333
+    },
+    "work_days_per_week": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    },
+    "internship_months": {
+      "correct": 15,
+      "total": 15,
+      "accuracy": 1.0
+    }
+  },
+  "scalar_macro_accuracy": 0.9852,
+  "list_metrics": {
+    "required_hard_skills": {
+      "true_positive": 1,
+      "false_positive": 3,
+      "false_negative": 43,
+      "precision": 0.25,
+      "recall": 0.0227,
+      "f1": 0.0417
+    },
+    "required_tools": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "preferred_hard_skills": {
+      "true_positive": 0,
+      "false_positive": 3,
+      "false_negative": 13,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "preferred_experience": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "list_micro": {
+    "true_positive": 1,
+    "false_positive": 6,
+    "false_negative": 86,
+    "precision": 0.1429,
+    "recall": 0.0115,
+    "f1": 0.0213
+  },
+  "hallucination_rate": 0.8571,
+  "job_errors": [
+    {
+      "job_id": "TEST_PM_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "API文档理解",
+            "主流LLM认知",
+            "技术方案通俗化"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "AI产品体验经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_PM_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "人机交互设计",
+            "行为规则设计"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "人机交互、智能产品、AI交互或机器人交互研究设计经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_PM_003",
+      "scalar_errors": {
+        "graduation_year": {
+          "gold": 2027,
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "交互设计",
+            "产品文档",
+            "数据分析",
+            "需求分析"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "教育或电子产品行业经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_PM_004",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "Agent架构与产品",
+            "Prompt Engineering",
+            "Vibe Coding",
+            "模型评测",
+            "自动化"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "Agent产品构建经验",
+            "大模型数据构造经验",
+            "自动化工作流设计经验",
+            "评测体系搭建经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_PM_005",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "信息检索",
+            "数据整理分析",
+            "文档撰写"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "产品实习或科研项目经验",
+            "医疗器械、超声或硬件产品项目经历"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_DA_001",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_tools": {
+          "missing": [
+            "Matlab",
+            "Python",
+            "SPSS"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_DA_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "业务指标拆解",
+            "数据分析"
+          ],
+          "extra": [
+            "SQL"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Excel",
+            "SQL"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "BI工具"
+          ],
+          "extra": [
+            "数据分析能力"
+          ]
+        }
+      }
+    },
+    {
+      "job_id": "TEST_DA_003",
+      "scalar_errors": {
+        "student_status": {
+          "gold": "在校生",
+          "prediction": null
+        }
+      },
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "数据分析"
+          ],
+          "extra": [
+            "SQL"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "Python",
+            "SQL"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "AI工具使用",
+            "PostgreSQL查询",
+            "Python数据处理",
+            "数据可视化与BI看板"
+          ],
+          "extra": [
+            "数据分析能力"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "数据工具使用经验",
+            "电商运营经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_DA_004",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "数据分析",
+            "统计分析"
+          ],
+          "extra": []
+        },
+        "required_tools": {
+          "missing": [
+            "Python"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_DA_005",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "指标定义与验证",
+            "数据分析思维"
+          ],
+          "extra": [
+            "SQL"
+          ]
+        },
+        "required_tools": {
+          "missing": [
+            "SQL",
+            "神策、TA、友盟或GA"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "AI工具使用",
+            "事件模型认知",
+            "埋点设计与测试"
+          ],
+          "extra": [
+            "Cursor"
+          ]
+        },
+        "preferred_experience": {
+          "missing": [
+            "数据验收经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_LLMEVAL_001",
+      "scalar_errors": {},
+      "list_errors": {}
+    },
+    {
+      "job_id": "TEST_LLMEVAL_002",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "代码能力",
+            "多模态与生成式模型原理",
+            "机器学习基础"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "多模态或生成式模型研发经验",
+            "大规模数据处理经验",
+            "有影响力的项目经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_LLMEVAL_003",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "大模型、多模态、Agent或三维生成研究",
+            "失败案例分析",
+            "实验设计与评测",
+            "机器学习基础",
+            "研究系统构建"
+          ],
+          "extra": []
+        },
+        "preferred_hard_skills": {
+          "missing": [
+            "三维生成与程序化建模",
+            "交互式任务环境",
+            "数据构建",
+            "模型后训练",
+            "评测与奖励设计"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "Blender、Threejs、TypeScript或UE/Unity mcp使用与开发经验"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_LLMEVAL_004",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "Python或其他编程语言",
+            "变量控制",
+            "实验设计",
+            "数据处理",
+            "评测任务设计",
+            "误差分析"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "科研课题、实验项目、工程实践、竞赛或技术写作经历"
+          ],
+          "extra": []
+        }
+      }
+    },
+    {
+      "job_id": "TEST_LLMEVAL_005",
+      "scalar_errors": {},
+      "list_errors": {
+        "required_hard_skills": {
+          "missing": [
+            "PyTorch",
+            "Python",
+            "大模型或多模态相关方向",
+            "模型评测",
+            "论文阅读与代码复现"
+          ],
+          "extra": []
+        },
+        "preferred_experience": {
+          "missing": [
+            "科研或竞赛经历",
+            "高水平论文发表",
+            "高质量开源项目经验"
+          ],
+          "extra": []
+        }
+      }
+    }
+  ]
+}
