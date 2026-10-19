@@ -1,68 +1,90 @@
 # AI Job Insight Evaluator
 
-面向大模型评测、产品经理和数据分析岗位的招聘信息分析与大模型评测项目。
+[![tests](https://github.com/Anlter-star/ai-job-insight-evaluator/actions/workflows/tests.yml/badge.svg)](https://github.com/Anlter-star/ai-job-insight-evaluator/actions/workflows/tests.yml)
+![release](https://img.shields.io/badge/release-v1.0.0-2563EB)
+![python](https://img.shields.io/badge/python-3.10%2B-0F172A)
 
-## 项目目标
+一个可复现的中文招聘信息结构化提取与大模型评测项目。项目覆盖产品经理、数据分析和大模型评测三类实习岗位，对比透明的关键词规则与 `DeepSeek Flash + Prompt v3`，并提供冻结测试集、双轨评测器、错误分析和 Streamlit 交互演示。
 
-本项目计划收集并标注公开招聘岗位描述（JD），评测不同方法对岗位信息的结构化提取能力，并进一步分析目标岗位的技能需求与差异。
+> v1.0.0 已完成：15 条未见测试数据正式冻结，Prompt v3 最终评测只运行一次，结果完整保存在仓库中。
 
-首期覆盖三类实习岗位：
+## 项目亮点
 
-- 大模型评测
-- 产品经理
-- 数据分析
+- **真实数据链路**：从公开 JD 采集、人工标准答案、证据定位，到模型预测与逐岗位错误分析。
+- **防数据泄漏**：开发集、调优集和最终测试集隔离；冻结测试集使用 SHA-256 校验。
+- **结构化上下文**：页面顶部的地点、日薪、学历、到岗天数和实习期限会进入模型输入。
+- **可信评测**：同时报告严格匹配、归一化匹配和原文依据检查，避免把所有标签差异误称为幻觉。
+- **可交互演示**：支持离线规则解析、Prompt v3 在线解析、最终指标浏览和复现检查。
 
-## MVP 范围
+## v1.0.0 最终结果
 
-第一阶段将完成：
+测试集包含 15 条未见岗位，产品经理、数据分析和大模型评测各 5 条。
 
-1. 收集并整理 30 条公开岗位描述。
-2. 建立统一的数据字段和人工标注规范。
-3. 实现关键词规则基线。
-4. 实现大模型结构化提取方案。
-5. 使用准确率、Precision、Recall、F1 和幻觉率进行评测。
-6. 使用 Streamlit 展示岗位解析、模型评测和岗位洞察。
+| 指标 | 关键词规则 | DeepSeek + Prompt v3 |
+| --- | ---: | ---: |
+| 单值字段宏平均准确率 | 98.52% | **97.78%** |
+| 严格列表微平均 F1 | 2.13% | **22.22%** |
+| 归一化列表微平均 F1 | 2.13% | **24.69%** |
+| 潜在无原文支持项率 | 0.00% | **10.90%** |
 
-## 当前进度
+Prompt v3 在用工类型、地点、日薪、学历、每周到岗天数和实习期限六项上全部达到 **100%**。列表字段仍受标签粒度、合并/拆分方式和工具字段归属影响，具体边界样本见 [最终评测报告](docs/test_v1_final_report.md)。
 
-- [x] 创建项目仓库
-- [x] 定义项目目标与 MVP
-- [x] 建立岗位数据模板
-- [ ] 收集第一批 30 条岗位数据
-- [x] 完成首批 9 条岗位数据与人工标准答案
-- [x] 建立额外9条冻结验证集（3类岗位各3条）
-- [x] 编写标注规范
-- [x] 实现规则基线
-- [x] 完成兼容多种模型的大模型提取器
-- [x] 填写 API 配置并运行首轮大模型评测
-- [x] 实现严格匹配、归一化匹配和原文依据检查的评测器 v2
-- [x] 完成9条冻结验证集的首轮规则与DeepSeek盲测
-- [ ] 开发可视化页面
+## 演示功能
 
-## 运行规则基线
+Streamlit 页面包含三个页签：
 
-项目当前只使用 Python 标准库，不需要安装第三方依赖。建议使用 Python 3.10 或更高版本。
+1. **在线解析**：输入职位正文和页面顶部元数据，选择规则或 Prompt v3，查看结构化 JSON。
+2. **最终评测**：直接浏览冻结测试集的单值字段和列表字段指标，无需 API 密钥。
+3. **数据与复现**：检查测试集条数、类别平衡和 SHA-256 冻结状态。
 
-```bash
-python -m src.run_baseline
+```text
+┌──────────────── 在线解析 ────────────────┐
+│ JD 正文 + 顶部元数据 → 规则 / Prompt v3 │
+│                       → 结构化 JSON      │
+├──────────────── 最终评测 ────────────────┤
+│ 单值准确率 97.78% · 归一化 F1 24.69%    │
+├──────────────── 数据与复现 ──────────────┤
+│ 15 条 · 3 类 × 5 条 · SHA-256 通过      │
+└──────────────────────────────────────────┘
 ```
 
-运行测试：
+## 快速开始
+
+要求 Python 3.10 或更高版本。
 
 ```bash
-python -m unittest discover -s tests -v
+git clone https://github.com/Anlter-star/ai-job-insight-evaluator.git
+cd ai-job-insight-evaluator
+python -m venv .venv
 ```
 
-程序读取 `data/annotated/gold_dataset.jsonl`，并生成：
+Windows PowerShell：
 
-- `results/baseline_predictions.jsonl`：每个岗位的规则提取结果。
-- `results/baseline_metrics.json`：准确率、Precision、Recall、F1、幻觉率和逐岗位错误。
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+streamlit run app/app.py
+```
 
-## 运行大模型提取器
+macOS / Linux：
 
-提取器使用 OpenAI 兼容的 `/chat/completions` 协议，默认示例配置为 DeepSeek，也可以通过修改三项配置切换到其他兼容服务。程序只使用 Python 标准库，不需要安装 SDK。
+```bash
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+streamlit run app/app.py
+```
 
-首先复制 `.env.example` 为 `.env`，填写：
+打开 `http://localhost:8501`。浏览最终评测和运行规则解析不需要模型密钥。
+
+## 配置 Prompt v3 在线解析
+
+复制配置模板：
+
+```powershell
+Copy-Item .env.example .env
+```
+
+在本地 `.env` 中填写 OpenAI 兼容服务：
 
 ```text
 LLM_API_KEY=你的密钥
@@ -70,122 +92,86 @@ LLM_BASE_URL=https://api.deepseek.com
 LLM_MODEL=deepseek-flash
 ```
 
-`.env` 已被 Git 忽略，严禁把真实密钥提交到仓库。建议先调用一条数据检查配置和余额：
+`.env` 已被 Git 忽略。不要在日志、截图、Issue 或提交中暴露真实密钥。
+
+## 复现实验
+
+运行全部自动化测试：
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+运行开发集规则基线：
+
+```bash
+python -m src.run_baseline
+```
+
+运行一条模型冒烟测试：
 
 ```bash
 python -m src.run_llm --limit 1 --output-prefix llm_smoke
 ```
 
-测试成功后运行全部 9 条：
+复核已保存的冻结测试预测，不会再次请求模型：
 
 ```bash
-python -m src.run_llm
-python -m src.compare_models
+python -m src.run_evaluation_v2 --dataset data/test/test_dataset_v1.jsonl --results-dir results/test_v1_final
+python -m src.compare_models --results-dir results/test_v1_final
 ```
 
-完整运行会生成 `results/llm_predictions.jsonl` 和 `results/llm_metrics.json`。仓库保留首轮正式实验结果；使用 `llm_smoke` 等其他前缀产生的临时结果不会提交。
+冻结测试集校验值保存在 `data/test/test_dataset_v1.sha256`，自动化测试会验证文件未被修改。该测试集不得用于继续调优 Prompt、规则或别名。
 
-## 运行评测器 v2
+## 评测设计
 
-评测器 v2 复用保存的规则预测和大模型预测，不会再次请求模型：
+评测对象包括 9 个单值字段与 4 个列表字段：
 
-```bash
-python -m src.run_evaluation_v2
-```
+- 单值：岗位类别、用工类型、地点、日薪、学历、在校状态、毕业年份、到岗天数、实习期限。
+- 列表：必需硬技能、必需工具、加分硬技能、加分经验。
 
-它同时报告严格匹配与人工审核同义词后的归一化匹配，并把额外预测拆分为“原文支持、需要复核”和“潜在无依据”两类。详细定义见 `docs/evaluation_methodology.md`，输出文件为：
+评测器 v2 提供三层结果：
 
-- `results/evaluation_v2_metrics.json`
-- `results/error_analysis.jsonl`
+- **严格匹配**：预测标签必须与标准答案完全一致。
+- **归一化匹配**：使用经过审核的字段级别名处理表达差异。
+- **原文依据检查**：将额外项区分为原文支持项和潜在无依据项。
 
-## 首轮大模型评测结果
+完整定义见 [评测方法](docs/evaluation_methodology.md)。
 
-| 方法 | 单值字段准确率 | 严格技能 F1 | 归一化技能 F1 | 潜在无依据率 |
-| --- | ---: | ---: | ---: | ---: |
-| 关键词规则 v1 | 79.17% | 85.31% | 85.31% | 0.00% |
-| DeepSeek Flash + Prompt v1 | 75.00% | 42.16% | 70.97% | 0.00% |
+## 数据分割
 
-严格匹配会把“开发AI Agent”和“AI Agent开发”等同义表达判为错误。评测器 v2 使用字段级、人工审核的映射后，DeepSeek 技能 F1 提升至70.97%。第一版62.86%的所谓“幻觉率”实际是严格额外项率，其中包含同义表达、标签粒度和字段归属差异；详细分析见 `docs/evaluation_report_v2.md`。
+| 分割 | 数量 | 用途 |
+| --- | ---: | --- |
+| 开发集 | 9 | 规则、Prompt 和评测流程开发 |
+| 调优集 | 9 | 首轮盲测后用于 Prompt v2/v3 改进 |
+| 冻结测试集 v1 | 15 | 唯一一次最终评测与后续不可变回归基准 |
 
-## 首轮基线结果
-
-当前数据集包含 9 条岗位，产品经理、大模型评测、数据分析各 3 条。
-
-| 指标 | 结果 |
-| --- | ---: |
-| 单值字段宏平均准确率 | 79.17% |
-| 技能字段微平均 Precision | 96.83% |
-| 技能字段微平均 Recall | 76.25% |
-| 技能字段微平均 F1 | 85.31% |
-| 幻觉率 | 3.17% |
-
-规则方法对工具名称和明确关键词表现较好，但容易遗漏需要语义理解的能力要求。到岗天数和实习期限的准确率均为 33.33%，主要因为部分招聘页面顶部的结构化信息没有进入职位正文。当前词典根据首批样本设计，后续需要用新增岗位检验泛化能力，不能将本轮结果视为最终效果。
-
-## 冻结验证集
-
-新增的9条岗位保存在 `data/validation/validation_dataset.jsonl`，不并入规则和提示词开发所用的 `gold_dataset.jsonl`。验证集覆盖产品经理、大模型评测和数据分析各3条，用于下一轮未见数据测试。首轮盲测完成前不得根据验证集修改规则、提示词或归一化别名；数据边界和冲突处理见 `docs/validation_dataset_notes.md`。
-
-冻结当前代码后，使用独立目录运行验证集，避免覆盖开发集结果：
-
-```bash
-python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
-python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation --rules-only
-python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
-python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation
-python -m src.compare_models --results-dir results/validation
-```
-
-大模型提取支持断点续跑；若中途网络失败，重新执行同一条 `run_llm` 命令即可跳过已完成岗位。
-
-首轮冻结预测经标准答案审计后重新评测：规则技能F1为2.56%，DeepSeek技能F1为19.00%；共同8个单值字段准确率分别为61.11%和65.28%。本轮暴露出顶部元数据与数据集级采集上下文未进入模型输入、标签粒度不统一和开发集别名表泛化不足等问题。完整分析见 `docs/validation_report_v1.md`。
-
-### 顶部元数据输入 v2
-
-数据记录现已把页面顶部直接展示的地点、日薪、学历、到岗天数和实习期限保存在 `input.page_metadata`。`compose_source_text` 会将其作为原始输入传给模型；规则v2也优先采用这些值。Prompt v2同时增加了日薪字段、精确毕业年份和顶部/正文冲突规则。
-
-为保留首轮盲测结果，v2实验写入新目录：
-
-```bash
-python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
-python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
-python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/validation_v2
-```
-
-DeepSeek + Prompt v2已完成：共同8个单值字段准确率从65.28%提升至93.06%，全部9个单值字段为93.83%；用工类型、学历、毕业年份、到岗天数、实习期限和新增日薪字段均达到100%，技能F1由19.00%小幅提升至20.56%。标注审计和详细结果见 `docs/metadata_input_v2_report.md`。
-
-### 数据集上下文与 Prompt v3
-
-首轮盲测已结束，原验证集现在作为9条调优数据使用。每条记录新增模型可见的 `input.dataset_context.employment_type`；它来自已确认的采集范围，不从 `gold` 动态读取。Prompt v3 同时收紧 `student_status`、岗位分类、必需/加分字段边界和技能粒度规则。为保留历史结果，v3输出写入独立目录：
-
-```bash
-python -m src.run_baseline --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3
-python -m src.run_llm --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3 --restart
-python -m src.run_evaluation_v2 --dataset data/validation/validation_dataset.jsonl --results-dir results/tuning_v3
-```
-
-规则v3单值字段宏平均准确率为95.06%。DeepSeek + Prompt v3已在9条调优数据上完成：9个单值字段全部达到100%，技能微平均F1从v2的20.56%提升到24.75%。潜在无原文支持项率从13.48%升到19.38%，仍需在新的冻结测试集上检验泛化并继续控制技能输出粒度。详细结果见 `docs/tuning_v3_report.md`。
-
-### 冻结测试集 v1 最终评测
-
-新的未见测试集包含15条岗位，产品经理、数据分析和大模型评测各5条，并以SHA-256校验值冻结。DeepSeek + Prompt v3已完成唯一一次最终评测：单值字段宏平均准确率97.78%，严格列表微平均F1为22.22%，归一化列表微平均F1为24.69%，潜在无原文支持项率为10.90%。其中用工类型、地点、日薪、学历、到岗天数和实习期限均达到100%。详细结果和边界样本说明见 `docs/test_v1_final_report.md`；冻结后不得使用该测试集继续调优。
+所有数据均来自公开招聘信息，不包含求职者姓名、手机号等个人敏感信息。标注规则见 [标注规范](docs/annotation_guideline.md)。
 
 ## 仓库结构
 
 ```text
 ai-job-insight-evaluator/
-├── data/          # 原始数据与人工标注数据
-├── docs/          # 标注规范、评测方案和产品文档
-├── src/           # 数据加载、规则提取与评测代码
-├── app/           # Streamlit 应用
-├── results/       # 预测结果、评测指标和图表
-├── tests/         # 自动化测试
-└── README.md
+├── app/             # Streamlit 交互演示
+├── data/            # 开发、调优、冻结测试数据与别名
+├── docs/            # 标注规范、评测方法和实验报告
+├── prompts/         # Prompt v1-v3
+├── results/         # 各轮预测、指标与错误分析
+├── scripts/         # 可审计的数据集构建脚本
+├── src/             # 提取器、数据加载和评测器
+├── tests/           # 自动化测试
+└── requirements.txt
 ```
 
-## 数据与隐私
+## 关键文档
 
-项目仅使用公开招聘信息，不收集求职者的姓名、手机号或其他个人敏感信息。所有数据都将记录来源和采集日期，并遵守来源网站的使用条款。
+- [冻结测试集最终报告](docs/test_v1_final_report.md)
+- [Prompt v3 调优报告](docs/tuning_v3_report.md)
+- [顶部元数据输入 v2 报告](docs/metadata_input_v2_report.md)
+- [首轮冻结验证报告](docs/validation_report_v1.md)
+- [评测方法](docs/evaluation_methodology.md)
+- [标注规范](docs/annotation_guideline.md)
 
-## License
+## 版本
 
-本项目暂未选择开源许可证。
+`v1.0.0` 对应冻结测试集与 Prompt v3 最终结果。后续研发必须使用新的开发/验证数据，不得回看测试集进行针对性调优。
