@@ -21,7 +21,7 @@ from src.llm_extractor import (  # noqa: E402
     LLMConfig,
     OpenAICompatibleExtractor,
 )
-from app.demo_utils import build_demo_record, read_json, render_metric  # noqa: E402
+from demo_utils import build_demo_record, read_json, render_metric  # noqa: E402
 
 
 TEST_DATASET = PROJECT_ROOT / "data" / "test" / "test_dataset_v1.jsonl"
@@ -40,7 +40,7 @@ st.title("AI Job Insight Evaluator")
 st.caption("招聘信息结构化提取 · Prompt 评测 · 可复现实验")
 
 with st.sidebar:
-    st.subheader("v1.0.0")
+    st.subheader("v1.0.1")
     st.write("DeepSeek Flash · Prompt v3")
     st.success("冻结测试集：15 条")
     st.caption("产品经理 / 数据分析 / 大模型评测各 5 条")

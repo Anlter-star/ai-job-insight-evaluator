@@ -1,12 +1,12 @@
 # AI Job Insight Evaluator
 
 [![tests](https://github.com/Anlter-star/ai-job-insight-evaluator/actions/workflows/tests.yml/badge.svg)](https://github.com/Anlter-star/ai-job-insight-evaluator/actions/workflows/tests.yml)
-![release](https://img.shields.io/badge/release-v1.0.0-2563EB)
+![release](https://img.shields.io/badge/release-v1.0.1-2563EB)
 ![python](https://img.shields.io/badge/python-3.10%2B-0F172A)
 
 一个可复现的中文招聘信息结构化提取与大模型评测项目。项目覆盖产品经理、数据分析和大模型评测三类实习岗位，对比透明的关键词规则与 `DeepSeek Flash + Prompt v3`，并提供冻结测试集、双轨评测器、错误分析和 Streamlit 交互演示。
 
-> v1.0.0 已完成：15 条未见测试数据正式冻结，Prompt v3 最终评测只运行一次，结果完整保存在仓库中。
+> v1.0.1 展示版已发布：补充真实演示截图并完善作品入口；冻结测试集、Prompt v3 与 v1.0.0 最终评测结果均保持不变。
 
 ## 项目亮点
 
@@ -37,16 +37,33 @@ Streamlit 页面包含三个页签：
 2. **最终评测**：直接浏览冻结测试集的单值字段和列表字段指标，无需 API 密钥。
 3. **数据与复现**：检查测试集条数、类别平衡和 SHA-256 冻结状态。
 
-```text
-┌──────────────── 在线解析 ────────────────┐
-│ JD 正文 + 顶部元数据 → 规则 / Prompt v3 │
-│                       → 结构化 JSON      │
-├──────────────── 最终评测 ────────────────┤
-│ 单值准确率 97.78% · 归一化 F1 24.69%    │
-├──────────────── 数据与复现 ──────────────┤
-│ 15 条 · 3 类 × 5 条 · SHA-256 通过      │
-└──────────────────────────────────────────┘
-```
+### 界面预览
+
+#### 在线解析
+
+![在线解析页面](docs/assets/streamlit-online-extraction.png)
+
+<details>
+<summary>查看完整输入表单</summary>
+
+![在线解析输入表单](docs/assets/streamlit-online-extraction-form.png)
+
+</details>
+
+#### 最终评测
+
+![冻结测试集最终评测](docs/assets/streamlit-final-evaluation.png)
+
+<details>
+<summary>查看列表字段评测详情</summary>
+
+![列表字段评测详情](docs/assets/streamlit-final-evaluation-detail.png)
+
+</details>
+
+#### 数据与复现
+
+![冻结数据与复现页面](docs/assets/streamlit-reproducibility.png)
 
 ## 快速开始
 
@@ -165,6 +182,7 @@ ai-job-insight-evaluator/
 
 ## 关键文档
 
+- [v1.0.1 发布说明](docs/releases/v1.0.1.md)
 - [冻结测试集最终报告](docs/test_v1_final_report.md)
 - [Prompt v3 调优报告](docs/tuning_v3_report.md)
 - [顶部元数据输入 v2 报告](docs/metadata_input_v2_report.md)
@@ -174,4 +192,7 @@ ai-job-insight-evaluator/
 
 ## 版本
 
-`v1.0.0` 对应冻结测试集与 Prompt v3 最终结果。后续研发必须使用新的开发/验证数据，不得回看测试集进行针对性调优。
+- `v1.0.0`：冻结测试集与 Prompt v3 的最终评测版本。
+- `v1.0.1`：仅完善演示启动、真实截图和项目文档，不修改数据、Prompt、提取逻辑或最终指标。
+
+后续研发必须使用新的开发/验证数据，不得回看测试集进行针对性调优。
